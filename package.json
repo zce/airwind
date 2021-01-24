@@ -2,16 +2,16 @@
   "name": "airwind",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "dev": "vite"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.1.0",
+    "@vitejs/plugin-vue": "^1.1.1",
     "@vue/compiler-sfc": "^3.0.5",
-    "autoprefixer": "^10.2.3",
-    "postcss": "^8.2.4",
-    "tailwindcss": "^2.0.2",
-    "vite": "^2.0.0-beta.38",
+    "@vueuse/core": "^4.0.9",
+    "less": "^4.1.0",
+    "vant": "^3.0.5",
+    "vite": "^2.0.0-beta.44",
     "vue": "^3.0.5"
   }
 }
