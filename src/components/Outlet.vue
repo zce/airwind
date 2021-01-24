@@ -1,11 +1,11 @@
 <template>
-  <div class="outlet" ref="wrapper" :style="style">
+  <div class="outlet" ref="wrapper" :style="{ top: `${y}px`, left: `${x}px`, transform: `perspective(${perspective}px) rotateX(${87 + vertical}deg) skewX(${horizontal}deg)` }">
     <div class="layer" v-for="l in layerCount" :key="l">
       <i
         v-for="p in particleCount"
         :key="p"
         :style="{
-          left: `${5 - Math.floor(Math.random() * 50)}px`,
+          left: `${10 - Math.floor(Math.random() * 50)}px`,
           animationDelay: `-${Math.floor(Math.random() * 1000)}ms`
         }"
       />
@@ -13,66 +13,84 @@
   </div>
 </template>
 
-<script setup>
-import { ref, defineProps, computed, defineEmit, watchEffect, onMounted, onUnmounted } from 'vue'
-import { useMouse } from '@vueuse/core'
+<script>
+
+export default {
+  props: {
+    x: Number,
+    y: Number,
+    vertical: Number,
+    horizontal: Number
+  },
+  data () {
+    return {
+      layerCount: 2,
+      particleCount: 30,
+      perspective: 500
+    }
+  },
+  mounted () {
+    window.addEventListener('touchmove', this.update, false)
+  },
+  unmounted () {
+    window.removeEventListener('touchmove', update)
+  },
+  methods: {
+    update (e) {
+      const { clientX, clientY } = e.touches[0]
+      const x = clientX - this.x
+      const y = clientY - this.y
+      if (Math.abs(x) > 100) return
+      if (Math.abs(y) > 120) return
+
+      const va = -180 / (Math.PI / Math.atan(y / this.perspective))
+      const ha = 180 / (Math.PI / Math.atan(x / this.perspective))
+
+      this.transform(va, ha)
+      this.$emit('update', va, ha)
+    },
+    transform (va, ha) {
+      this.$refs.wrapper.style.transform = `perspective(${this.perspective}px) rotateX(${87 + va}deg) skewX(${ha}deg)`
+    }
+  }
+}
+</script>
+
+<!-- <script setup>
+import { ref, defineProps, defineEmit, onMounted, onUnmounted } from 'vue'
 const layerCount = 2
-const particleCount = 20
+const particleCount = 30
 const perspective = 500
 
 const props = defineProps({
   x: Number,
   y: Number,
-  modelValue: {
-    type: Object,
-    default: { vertical: 0, horizontal: 0 }
-  }
+  vertical: Number,
+  horizontal: Number
 })
 
-const emit = defineEmit(['update:modelValue'])
+const emit = defineEmit(['update'])
 
 const wrapper = ref(null)
-const vertical = ref(props.modelValue.vertical)
-const horizontal = ref(props.modelValue.horizontal)
 
 const update = e => {
   const { clientX, clientY } = e.touches[0]
   const x = clientX - props.x
   const y = clientY - props.y
   if (Math.abs(x) > 100) return
-  if (Math.abs(y) > 100) return
+  if (Math.abs(y) > 120) return
 
   const va = -180 / (Math.PI / Math.atan(y / perspective))
   const ha = 180 / (Math.PI / Math.atan(x / perspective))
 
   wrapper.value.style.transform = `perspective(${perspective}px) rotateX(${87 + va}deg) skewX(${ha}deg)`
+  emit('update', va, ha)
 }
 
 onMounted(() => window.addEventListener('touchmove', update, false))
 
 onUnmounted(() => window.removeEventListener('touchmove', update))
-
-const style = {
-  top: `${props.y}px`,
-  left: `${props.x}px`,
-  transform: `perspective(${perspective}px) rotateX(${87 + vertical.value}deg) skewX(${horizontal.value}deg)`
-}
-
-// const { x, y } = useMouse()
-
-// watchEffect(() => {
-//   const xOffset = x.value - props.x
-//   const yOffset = y.value - props.y
-//   if (Math.abs(xOffset) > 100) return
-//   if (Math.abs(yOffset) > 100) return
-//   const va = -180 / (Math.PI / Math.atan(yOffset / perspective))
-//   const ha = 180 / (Math.PI / Math.atan(xOffset / perspective))
-//   console.log(va, ha, wrapper.value)
-//   if (wrapper.value)
-//     wrapper.value.style.transform = `perspective(${perspective}px) rotateX(${87 + va}deg) skewX(${ha}deg)`
-// })
-
-</script>
+</script> -->
 
 <style>
 .outlet {
@@ -86,29 +104,21 @@ const style = {
 }
 
 .layer:nth-child(1) {
-  transform: perspective(1000px) rotateX(1deg) scaleX(0.6);
+  transform: perspective(1000px) rotateX(1deg) scaleX(0.5);
 }
 
 .layer:nth-child(2) {
-  transform: perspective(1000px) rotateX(-1deg) scaleX(0.6);
+  transform: perspective(1000px) rotateX(-1deg) scaleX(0.5);
 }
-
-/* .layer:nth-child(3) {
-  transform: perspective(1000px) rotateX(86.5deg) scaleX(0.5);
-}
-
-.layer:nth-child(4) {
-  transform: perspective(1000px) rotateX(85.5deg) scaleX(0.5);
-} */
 
 .layer i {
   position: absolute;
   top: 0;
-  width: 40px;
-  height: 100px;
-  background: #3dfff870;
+  width: 30px;
+  height: 150px;
+  background: #3dfff8;
   border-radius: 50%;
-  mix-blend-mode: screen;
+  /* mix-blend-mode: screen; */
   will-change: transform;
   animation: move 1000ms linear infinite;
 }
