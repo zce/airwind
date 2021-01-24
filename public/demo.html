@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outlet</title>
+  <style>
+      html {
+        overflow: hidden;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+        margin: 0;
+        background: #000;
+      }
+
+      .outlet {
+        position: relative;
+        transform-style: preserve-3d;
+        transform: perspective(400px) rotateX(-10deg) skewX(0deg);
+      }
+
+      .layer {
+        position: absolute;
+      }
+
+      .layer:nth-child(1) {
+        transform: perspective(800px) rotateX(88.5deg) scaleX(0.8);
+      }
+
+      .layer:nth-child(2) {
+        transform: perspective(800px) rotateX(87.5deg) scaleX(0.8);
+      }
+
+      .layer:nth-child(3) {
+        transform: perspective(800px) rotateX(86.5deg) scaleX(0.8);
+      }
+
+      .layer:nth-child(4) {
+        transform: perspective(800px) rotateX(85.5deg) scaleX(0.8);
+      }
+
+      .layer i {
+        position: absolute;
+        top: 0;
+        width: 20px;
+        height: 60px;
+        background: #3dfff870;
+        border-radius: 50%;
+        mix-blend-mode: screen;
+      }
+
+      @keyframes move {
+        0% {
+          transform: translateY(0);
+        }
+        10% {
+          transform: translateY(0);
+        }
+        87.7% {
+          transform: translateY(180px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(200px);
+          opacity: 0;
+        }
+      }
+  </style>
+</head>
+<body>
+  <div class="outlet"></div>
+
+  <script>
+    const layerCount = 4
+    const particleCount = 50
+    const perspective = 500
+
+    /** @type {HTMLElement} */
+    const outlet = document.querySelector('.outlet')
+
+    let result = ''
+    for (let i = 0; i < layerCount; i++) {
+      result += '<div class="layer">'
+      for (let i = 0; i < particleCount; i++) {
+        const left = 20 - Math.floor(Math.random() * 50)
+        const delay = - Math.floor(Math.random() * 1000)
+        result += `<i style="left: ${left}px; animation: move 1000ms linear ${delay}ms infinite"></i>`
+      }
+      result += '</div>'
+    }
+
+    outlet.innerHTML = result
+
+    const central = {
+      x: outlet.offsetLeft + outlet.clientWidth / 2,
+      y: outlet.offsetTop
+    }
+
+    window.addEventListener('touchmove', e => {
+      const { clientX, clientY } = e.touches[0]
+      const x = clientX - central.x
+      const y = clientY - central.y
+
+      const va = -180 / (Math.PI / Math.atan(y / perspective))
+      const ha = 180 / (Math.PI / Math.atan(x / perspective))
+
+      console.log(va, ha)
+      outlet.style.transform = `perspective(${perspective}px) rotateX(${va}deg) skewX(${ha * 2}deg)`
+    })
+  </script>
+</body>
+</html>

@@ -1,41 +1,30 @@
 <template>
   <Picker
     :columns="columns"
-    :defaultIndex="options.indexOf(modelValue)"
-    :visibleItemCount="size"
-    :itemHeight="itemHeight"
+    :defaultIndex="temps.indexOf(modelValue)"
+    :visibleItemCount="7"
+    :itemHeight="80"
     :showToolbar="false"
     @change="i => $emit('update:modelValue', i.value)"
   />
 </template>
 
 <script setup>
-import { computed, defineEmit, defineProps } from 'vue'
+import { defineEmit, defineProps } from 'vue'
 import Picker from 'vant/es/picker'
-// import 'vant/es/picker/style'
 
-const props = defineProps({
-  options: {
-    type: Array,
-    default: []
-  },
+const temps = Array(33).fill(16).map((item, i) => item + i * 0.5)
+
+defineProps({
   modelValue: {
     type: Number,
-    default: ({ options }) => options[0]
-  },
-  size: {
-    type: Number,
-    default: 5
-  },
-  itemHeight: {
-    type: Number,
-    default: 80
+    default: 25
   }
 })
 
 defineEmit(['update:modelValue'])
 
-const columns = computed(() => props.options.map(i => ({ text: i.toFixed(1), value: i })))
+const columns = temps.map(i => ({ text: i.toFixed(1), value: i }))
 </script>
 
 <style>
@@ -48,12 +37,26 @@ const columns = computed(() => props.options.map(i => ({ text: i.toFixed(1), val
   display: flex;
   cursor: grab;
 }
+/* .van-picker__columns::after {
+  content: '';
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: 0;
+  z-index: -1;
+  background: center/contain no-repeat url(../assets/temp-bg.png);
+  opacity: 0.8;
+} */
 .van-picker__frame {
   position: absolute;
   top: 50%;
-  right: 0;
-  left: 0;
+  right: 1rem;
+  left: 1rem;
   z-index: 2;
+  border: 0.25rem solid rgba(98, 222, 250, 1);
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0.5rem rgba(98, 222, 250, 0.5);
   transform: translateY(-50%);
   pointer-events: none;
 }
@@ -74,7 +77,9 @@ const columns = computed(() => props.options.map(i => ({ text: i.toFixed(1), val
 .van-picker-column {
   flex: 1;
   overflow: hidden;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
+  color: #62defa;
+  text-shadow: 0 0 0.5rem rgba(98, 222, 250, 0.8);
 }
 .van-picker-column__wrapper {
   margin: 0;
@@ -87,85 +92,9 @@ const columns = computed(() => props.options.map(i => ({ text: i.toFixed(1), val
   justify-content: center;
   padding: 0 0.5rem;
   outline: 0;
+  transition: font-size 200ms;
+}
+.van-picker-column__item--selected {
+  font-size: 3rem;
 }
 </style>
-
-<!-- <template>
-  <div :style="{ height: `${wrapperHeight}px` }">
-    <p>{{ x }} {{ y }}</p>
-    <ul ref="inner">
-      <li role="button" v-for="item in options" :key="item" :aria-pressed="item === modelValue" :style="{ height: `${itemHeight}px` }">
-        {{ item.toFixed(1) }}
-      </li>
-    </ul>
-  </div>
-</template>
-
-<script setup>
-import { ref, defineEmit, defineProps, onMounted, computed } from 'vue'
-import { useMouse } from '@vueuse/core'
-
-const props = defineProps({
-  options: {
-    type: Array,
-    default: []
-  },
-  modelValue: {
-    type: Number,
-    default: ({ options }) => options[0]
-  },
-  size: {
-    type: Number,
-    default: 5
-  },
-  itemHeight: {
-    type: Number,
-    default: 80
-  }
-})
-
-const emit = defineEmit(['update:modelValue'])
-
-// const wrapper = ref(null)
-// const inner = ref(null)
-
-const wrapperHeight = computed(() => props.itemHeight * props.size)
-
-const { x, y } = useMouse({ touch: false })
-
-// onMounted(() => {
-//   /** @type {HTMLElement} */
-//   const wrapperEl = wrapper.value
-
-//   /** @type {HTMLElement} */
-//   const innerEl = inner.value
-
-//   const itemHeight = innerEl.children[0].clientHeight
-
-//   wrapperEl.style.height = `${itemHeight * props.size}px`
-
-//   innerEl.style.transform = `translateY(-${itemHeight}px)`
-// })
-</script>
-
-<style>
-div {
-  overflow: hidden;
-  max-height: 100%;
-}
-
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  text-align: center;
-  transition: transform 50ms;
-}
-
-li {
-  padding: 0.5rem;
-  font-size: 2rem;
-  line-height: 2;
-  box-sizing: border-box;
-}
-</style> -->
