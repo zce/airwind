@@ -1,75 +1,71 @@
 <template>
-  <Outlet ref="oneOutlet" :x="220" :y="415" :vertical="-5" :horizontal="0" @update="(vertical, horizontal) => Object.assign(oneAngle, { vertical, horizontal })" />
-  <Outlet ref="twoOutlet" :x="490" :y="415" :vertical="-5" :horizontal="0" @update="(vertical, horizontal) => Object.assign(twoAngle, { vertical, horizontal })" />
-  <Outlet ref="threeOutlet" :x="790" :y="415" :vertical="-5" :horizontal="0" @update="(vertical, horizontal) => Object.assign(threeAngle, { vertical, horizontal })" />
-  <Outlet ref="fourOutlet" :x="1060" :y="415" :vertical="-5" :horizontal="0" @update="(vertical, horizontal) => Object.assign(fourAngle, { vertical, horizontal })" />
-  <Picker class="left" v-model="leftTemp" />
-  <Picker class="right" v-model="rightTemp" />
+  <Outlet
+    v-for="item in state.outlets"
+    :key="item.x"
+    :mode="item.mode"
+    :x="item.x"
+    :y="item.y"
+    v-model:vertical="item.vertical"
+    v-model:horizontal="item.horizontal"
+  />
+  <Picker class="left" v-model="state.temperature.left" />
+  <Picker class="right" v-model="state.temperature.right" />
   <div class="bottom">
-    <Slider v-model="airVolume" />
-    <Switch align="left" v-model="leftPreset" />
-    <Switch align="right" v-model="rightPreset" />
+    <Slider v-model="state.volume" />
+    <Switch align="left" v-model="state.preset.left" />
+    <Switch align="right" v-model="state.preset.right" />
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref, watchEffect } from 'vue'
+import { reactive, watch } from 'vue'
 
 import Outlet from './components/Outlet.vue'
 import Picker from './components/Picker.vue'
 import Slider from './components/Slider.vue'
 import Switch from './components/Switch.vue'
 
-const leftTemp = ref(24.5)
-const rightTemp = ref(26.5)
-const airVolume = ref(4)
-const leftPreset = ref()
-const rightPreset = ref()
-const oneOutlet = ref(null)
-const oneAngle = { vertical: -3, horizontal: 0 }
-const twoOutlet = ref(null)
-const twoAngle = { vertical: -3, horizontal: 0 }
-const threeOutlet = ref(null)
-const threeAngle = { vertical: -3, horizontal: 0 }
-const fourOutlet = ref(null)
-const fourAngle = { vertical: -3, horizontal: 0 }
+const state = reactive({
+  temperature: { left: 24.5, right: 26.5 },
+  volume: 4,
+  preset: { left: null, right: null },
+  outlets: [
+    { mode: 'manual', x: 220, y: 415, vertical: -4, horizontal: 0 },
+    { mode: 'manual', x: 490, y: 415, vertical: -4, horizontal: 0 },
+    { mode: 'manual', x: 790, y: 415, vertical: -4, horizontal: 0 },
+    { mode: 'manual', x: 1060, y: 415, vertical: -4, horizontal: 0 }
+  ]
+})
 
-const presets = {
-  sweep: () => {
-    let angle = 0
-    let inc = 0.1
-    oneAngle.horizontal = angle
-    twoAngle.horizontal = angle
-    threeAngle.horizontal = angle
-    fourAngle.horizontal = angle
-    const update = () => {
-      if (angle > 10) inc = -0.1
-      if (angle < -10) inc = 0.1
-      angle += inc
-      oneOutlet.value.transform(oneAngle.vertical, angle)
-      twoOutlet.value.transform(twoAngle.vertical, angle)
-      threeOutlet.value.transform(threeAngle.vertical, angle)
-      fourOutlet.value.transform(fourAngle.vertical, angle)
-      leftPreset.value === 'sweep' && requestAnimationFrame(update)
-    }
-    update()
+watch(() => state.preset.left, preset => {
+  console.log('preset.left', preset)
+  state.outlets[0].mode = preset
+  state.outlets[1].mode = preset
+  if (preset === 'focus') {
+    state.outlets[0].horizontal = 10
+    state.outlets[1].horizontal = -10
   }
-}
-
-watchEffect(() => {
-  console.log('leftTemp', leftTemp.value)
-  console.log('rightTemp', rightTemp.value)
+  if (preset === 'avoid') {
+    state.outlets[0].horizontal = -10
+    state.outlets[1].horizontal = 10
+  }
 })
 
-watchEffect(() => {
-  console.log('airVolume', airVolume.value)
+watch(() => state.preset.right, preset => {
+  console.log('preset.right', preset)
+  state.outlets[2].mode = preset
+  state.outlets[3].mode = preset
+  if (preset === 'focus') {
+    state.outlets[2].horizontal = 10
+    state.outlets[3].horizontal = -10
+  }
+  if (preset === 'avoid') {
+    state.outlets[2].horizontal = -10
+    state.outlets[3].horizontal = 10
+  }
 })
 
-watchEffect(() => {
-  console.log('leftPreset', leftPreset.value)
-  if (leftPreset.value === 'sweep') presets.sweep()
-  // console.log('rightPreset', rightPreset.value)
-})
+window.state = state
 </script>
 
 <style>
