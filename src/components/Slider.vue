@@ -13,9 +13,6 @@
 <script setup>
 import { defineEmit, defineProps } from 'vue'
 import Slider from 'vant/es/slider'
-// import 'vant/es/slider/style'
-
-const temps = Array(33).fill(16).map((item, i) => item + i * 0.5)
 
 defineProps({
   modelValue: {
@@ -25,23 +22,23 @@ defineProps({
 })
 
 defineEmit(['update:modelValue'])
-
-const columns = temps.map(i => ({ text: i.toFixed(1), value: i }))
 </script>
 
 <style>
 .slider {
-  flex: 1 0 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2.5rem;
+  margin: 5rem 20rem;
+  padding: 1rem;
+  border-radius: 2rem;
+  background: rgba(0, 0, 0, 0.5);
 }
 .van-slider {
   position: relative;
-  width: 35rem;
+  flex: 1 1 0;
   height: 0.5rem;
-  background-color: #ebedf0;
+  background: #fff;
   border-radius: 2rem;
   cursor: pointer;
   user-select: none;
@@ -58,21 +55,21 @@ const columns = temps.map(i => ({ text: i.toFixed(1), value: i }))
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: #62defa;
-  box-shadow: 0 0 0.5rem #62defa;
+  background: var(--primary-color);
+  box-shadow: 0 0 0.5rem var(--primary-color-alpha);
   border-radius: inherit;
   transition: all 0.2s;
 }
 .van-slider__button {
   width: 1.75rem;
   height: 1.75rem;
-  background-color: #62defa;
+  background: var(--primary-color);
   line-height: 3;
   text-align: center;
-  color: #62defa;
+  color: var(--primary-color);
   font-size: 2rem;
   border-radius: 50%;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 0 0.5rem #62defa;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 0 0.5rem var(--primary-color-alpha);
 }
 .van-slider__button-wrapper{
   position: absolute;
@@ -93,6 +90,6 @@ const columns = temps.map(i => ({ text: i.toFixed(1), value: i }))
   margin: 0 1rem;
   width: 1.75rem;
   height: 1.75rem;
-  color: #62defa;
+  color: var(--primary-color);
 }
 </style>

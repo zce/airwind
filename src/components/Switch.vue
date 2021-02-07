@@ -33,23 +33,22 @@ props.align === 'right' && actions.reverse()
 
 <style>
 .switch {
-  padding: 0 3rem;
+  padding: 4rem;
 }
 button {
   margin: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  border: 1px solid rgba(98, 222, 250, 0.4);
-  border-radius: 0.25rem;
-  background: rgba(98, 222, 250, 0.2);
-  color: #62defa;
-  font-size: 1.5rem;
-  box-shadow: 0 0 0.5rem rgba(98, 222, 250, 0.5);
+  padding: 0.75rem 1.75rem;
+  border: 1px solid var(--primary-color);
+  border-radius: 2rem;
+  background: var(--primary-color-alpha);
+  color: var(--primary-color);
+  font-size: 1.25rem;
+  box-shadow: 0 0 0.5rem var(--primary-color-alpha);
   outline: 0;
-  transition: all 300ms;
+  transition: background 300ms, color 300ms;
 }
 button:focus, button.active {
-  border-color: rgba(98, 222, 250, 0.8);
-  background: rgba(98, 222, 250, 0.6);
+  background: var(--primary-color);
   color: #fff;
 }
 </style>

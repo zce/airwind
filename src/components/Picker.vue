@@ -12,8 +12,7 @@
 <script setup>
 import { defineEmit, defineProps } from 'vue'
 import Picker from 'vant/es/picker'
-
-const temps = Array(33).fill(16).map((item, i) => item + i * 0.5)
+import { temps, columns } from '../utils/temperatures'
 
 defineProps({
   modelValue: {
@@ -23,8 +22,6 @@ defineProps({
 })
 
 defineEmit(['update:modelValue'])
-
-const columns = temps.map(i => ({ text: i.toFixed(1), value: i }))
 </script>
 
 <style>
@@ -37,26 +34,15 @@ const columns = temps.map(i => ({ text: i.toFixed(1), value: i }))
   display: flex;
   cursor: grab;
 }
-/* .van-picker__columns::after {
-  content: '';
-  position: absolute;
-  top: 0.5rem;
-  left: 0.5rem;
-  right: 0.5rem;
-  bottom: 0;
-  z-index: -1;
-  background: center/contain no-repeat url(../assets/temp-bg.png);
-  opacity: 0.8;
-} */
 .van-picker__frame {
   position: absolute;
   top: 50%;
   right: 1rem;
   left: 1rem;
   z-index: 2;
-  border: 0.25rem solid rgba(98, 222, 250, 1);
-  border-radius: 0.5rem;
-  box-shadow: 0 0 0.5rem rgba(98, 222, 250, 0.5);
+  border: 0.25rem solid var(--primary-color);
+  border-radius: 1rem;
+  box-shadow: 0 0 0.5rem var(--primary-color-alpha);
   transform: translateY(-50%);
   pointer-events: none;
 }
@@ -67,8 +53,8 @@ const columns = temps.map(i => ({ text: i.toFixed(1), value: i }))
   z-index: 1;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(180deg, hsla(0, 0%, 0%, 0.5), hsla(0, 0%, 0%, 0)),
-    linear-gradient(0deg, hsla(0, 0%, 0%, 0.5), hsla(0, 0%, 0%, 0));
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
   background-repeat: no-repeat;
   background-position: top, bottom;
   transform: translateZ(0);
@@ -78,8 +64,8 @@ const columns = temps.map(i => ({ text: i.toFixed(1), value: i }))
   flex: 1;
   overflow: hidden;
   font-size: 1.75rem;
-  color: #62defa;
-  text-shadow: 0 0 0.5rem rgba(98, 222, 250, 0.8);
+  color: var(--primary-color);
+  text-shadow: 0 0 0.25rem var(--primary-color-alpha);
 }
 .van-picker-column__wrapper {
   margin: 0;
