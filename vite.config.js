@@ -1,7 +1,7 @@
 import vue from '@vitejs/plugin-vue'
 
 /** @type {import('vite').UserConfig} */
-export default {
+module.exports = {
   base: '',
   plugins: [vue()]
 }

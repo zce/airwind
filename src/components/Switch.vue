@@ -47,7 +47,7 @@ button {
   outline: 0;
   transition: background 300ms, color 300ms;
 }
-button:focus, button.active {
+button.active {
   background: var(--primary-color);
   color: #fff;
 }
