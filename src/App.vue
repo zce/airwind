@@ -96,6 +96,7 @@ body {
   color: #fff;
   background: #000;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  user-select: none;
 }
 #app {
   position: relative;

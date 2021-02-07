@@ -27,7 +27,6 @@ defineEmit(['update:modelValue'])
 <style>
 .van-picker {
   position: relative;
-  user-select: none;
 }
 .van-picker__columns {
   position: relative;

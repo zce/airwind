@@ -41,7 +41,6 @@ defineEmit(['update:modelValue'])
   background: #fff;
   border-radius: 2rem;
   cursor: pointer;
-  user-select: none;
 }
 .van-slider::before {
   position: absolute;
