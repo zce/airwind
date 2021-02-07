@@ -8,19 +8,21 @@
   </div>
   <Outlet
     v-for="(item, i) in state.outlets"
-    :key="item.x"
+    :key="i"
+    :id="i"
     :mode="item.mode"
     :volume="state.volume"
     :temperature="i < 2 ? state.temperature.left : state.temperature.right"
     :x="item.x"
     :y="item.y"
-    v-model:vertical="item.vertical"
-    v-model:horizontal="item.horizontal"
+    :vertical="parse(item.vertical)"
+    :horizontal="parse(item.horizontal)"
+    :transition="item.transition"
   />
 </template>
 
 <script setup>
-import { reactive, watch } from 'vue'
+import { reactive, watch, onMounted, onUnmounted } from 'vue'
 
 import Outlet from './components/Outlet.vue'
 import Picker from './components/Picker.vue'
@@ -34,42 +36,89 @@ const defaults = {
   volume: 4,
   preset: { left: 'manual', right: 'manual' },
   outlets: [
-    { mode: 'manual', x: 220, y: 415, vertical: 75, horizontal: 75 },
-    { mode: 'manual', x: 490, y: 415, vertical: 75, horizontal: 75 },
-    { mode: 'manual', x: 790, y: 415, vertical: 75, horizontal: 75 },
-    { mode: 'manual', x: 1060, y: 415, vertical: 75, horizontal: 75 }
+    { x: 250, y: 415, vertical: 75, horizontal: 75 },
+    { x: 490, y: 415, vertical: 75, horizontal: 75 },
+    { x: 790, y: 415, vertical: 75, horizontal: 75 },
+    { x: 1030, y: 415, vertical: 75, horizontal: 75 }
   ]
 }
 
 const state = reactive(storage.get('state') ?? defaults)
 
-watch(() => state.preset.left, preset => {
-  state.outlets[0].mode = preset
-  state.outlets[1].mode = preset
+const persetChange = (align, o1, o2) => preset => {
+  state.outlets[o1].transition = true
+  state.outlets[o2].transition = true
   if (preset === 'focus') {
-    state.outlets[0].horizontal = 140
-    state.outlets[1].horizontal = 10
+    // TODO: transation
+    state.outlets[o1].horizontal = 140
+    state.outlets[o2].horizontal = 10
+    return
   }
   if (preset === 'avoid') {
-    state.outlets[0].horizontal = 10
-    state.outlets[1].horizontal = 140
+    // TODO: transation
+    state.outlets[o1].horizontal = 10
+    state.outlets[o2].horizontal = 140
+    return
   }
-})
+  if (preset === 'sweep') {
+    let inc1 = 0.3
+    let inc2 = 0.3
+    let angle1 = state.outlets[o1].horizontal
+    let angle2 = state.outlets[o2].horizontal
+    const sweep = () => {
+      if (state.preset[align] !== 'sweep') return
+      if (angle1 > 150 || angle1 < 0) inc1 = -inc1
+      if (angle2 > 150 || angle2 < 0) inc2 = -inc2
+      angle1 += inc1
+      angle2 += inc2
+      state.outlets[o1].horizontal = angle1
+      state.outlets[o2].horizontal = angle2
+      requestAnimationFrame(sweep)
+    }
+    requestAnimationFrame(sweep)
+  }
+  state.outlets[o1].transition = false
+  state.outlets[o2].transition = false
+}
 
-watch(() => state.preset.right, preset => {
-  state.outlets[2].mode = preset
-  state.outlets[3].mode = preset
-  if (preset === 'focus') {
-    state.outlets[2].horizontal = 140
-    state.outlets[3].horizontal = 10
-  }
-  if (preset === 'avoid') {
-    state.outlets[2].horizontal = 10
-    state.outlets[3].horizontal = 140
-  }
-})
+watch(() => state.preset.left, persetChange('left', 0, 1))
+
+watch(() => state.preset.right, persetChange('right', 2, 3))
 
 watch(() => state, state => storage.set('state', state), { deep: true })
+
+const parse = input => input / 150 * 20 - 10
+const revert = input => (input + 10) / 20 * 150
+
+const update = e => {
+  // ignore if target not `i`
+  if (e.target.tagName !== 'I') return
+
+  const { clientX, clientY } = e.touches[0]
+  const { id, parentElement } = e.target.parentElement.parentElement
+  const { offsetLeft, offsetTop } = parentElement
+
+  const x = clientX - offsetLeft
+  const y = clientY - offsetTop
+
+  const current = state.outlets[id]
+
+  if (id < 2) {
+    state.preset.left = 'manual'
+  } else {
+    state.preset.right = 'manual'
+  }
+
+  const va = revert(-180 / (Math.PI / Math.atan((y - current.y) / 500)))
+  const ha = revert(180 / (Math.PI / Math.atan((x - current.x) / 500)))
+
+  if (va > 0 && va < 150) current.vertical = va
+  if (ha > 0 && ha < 150) current.horizontal = ha
+}
+
+onMounted(() => document.addEventListener('touchmove', update, false))
+
+onUnmounted(() => document.removeEventListener('touchmove', update))
 
 window.state = state
 </script>

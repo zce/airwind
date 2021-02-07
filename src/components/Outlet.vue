@@ -10,63 +10,26 @@
 </template>
 
 <script setup>
-import { computed, watch, onMounted, onUnmounted, defineProps, defineEmit } from 'vue'
+import { computed, defineProps } from 'vue'
 import { colors } from '../utils/temperatures'
 
 const perspective = 500
 
-const parse = input => input / 150 * 20 - 10
-const revert = input => (input + 10) / 20 * 150
-
 const props = defineProps({
-  mode: String,
   volume: Number,
   temperature: Number,
   x: Number,
   y: Number,
   vertical: Number,
-  horizontal: Number
+  horizontal: Number,
+  transition: Boolean
 })
-
-const emit = defineEmit(['update:vertical', 'update:horizontal'])
-
-const update = e => {
-  const { clientX, clientY } = e.touches[0]
-  const x = clientX - props.x
-  const y = clientY - props.y
-  if (Math.abs(x) > 100) return
-  if (Math.abs(y) > 120) return
-
-  const va = -180 / (Math.PI / Math.atan(y / perspective))
-  const ha = 180 / (Math.PI / Math.atan(x / perspective))
-
-  emit('update:vertical', revert(va))
-  emit('update:horizontal', revert(ha))
-}
-
-onMounted(() => window.addEventListener('touchmove', update, false))
-
-onUnmounted(() => window.removeEventListener('touchmove', update))
-
-const sweep = () => {
-  let inc = 0.3
-  let angle = props.horizontal
-  const update = () => {
-    if (props.mode !== 'sweep') return
-    if (angle > 150 || angle < 0) inc = -inc
-    angle += inc
-    emit('update:horizontal', angle)
-    requestAnimationFrame(update)
-  }
-  requestAnimationFrame(update)
-}
-
-watch(() => props.mode, mode => mode === 'sweep' && sweep(), { immediate: true })
 
 const style = computed(() => ({
   top: `${props.y}px`,
   left: `${props.x}px`,
-  transform: `perspective(${perspective}px) rotateX(${87 + parse(props.vertical)}deg) skewX(${parse(props.horizontal)}deg)`,
+  transform: `perspective(500px) rotateX(${87 + props.vertical}deg) skewX(${props.horizontal}deg)`,
+  transition: props.transition ? 'transform 500ms' : '',
 
   '--size': 1 + 0.03 * props.volume,
   '--color': colors[props.temperature]
@@ -77,7 +40,6 @@ const style = computed(() => ({
 .outlet {
   position: absolute;
   transform-style: preserve-3d;
-  transition: transform 300ms;
 }
 .layer {
   position: absolute;
@@ -99,7 +61,6 @@ const style = computed(() => ({
   transform-origin: top;
   mix-blend-mode: screen;
   will-change: transform;
-  transition: background 300ms;
   animation: move 1000ms linear infinite;
 }
 .layer i:nth-child(1) {
@@ -224,7 +185,7 @@ const style = computed(() => ({
 }
 @keyframes move {
   87.7% {
-    transform: scaleY(2.6);
+    transform: scaleY(2.4);
     opacity: 0;
   }
   100% {
