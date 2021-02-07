@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { reactive, useCssVars, watch } from 'vue'
+import { reactive, watch } from 'vue'
 
 import Outlet from './components/Outlet.vue'
 import Picker from './components/Picker.vue'
@@ -44,7 +44,6 @@ const defaults = {
 const state = reactive(storage.get('state') ?? defaults)
 
 watch(() => state.preset.left, preset => {
-  console.log('preset.left', preset)
   state.outlets[0].mode = preset
   state.outlets[1].mode = preset
   if (preset === 'focus') {
@@ -58,7 +57,6 @@ watch(() => state.preset.left, preset => {
 })
 
 watch(() => state.preset.right, preset => {
-  console.log('preset.right', preset)
   state.outlets[2].mode = preset
   state.outlets[3].mode = preset
   if (preset === 'focus') {
@@ -71,9 +69,8 @@ watch(() => state.preset.right, preset => {
   }
 })
 
-watch(() => state, state => {
-  storage.set('state', state)
-}, { deep: true })
+watch(() => state, state => storage.set('state', state), { deep: true })
+
 window.state = state
 </script>
 
@@ -87,22 +84,12 @@ window.state = state
   --primary-color: #5dabee;
   --primary-color-alpha: #5dabee40;
 }
-body {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: DSDIGI, system-ui;
-  color: #fff;
-  background: #000;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  user-select: none;
-}
 #app {
   position: relative;
   height: 800px;
   width: 1280px;
   background: center/contain url(assets/background.png);
+  font-family: DSDIGI, system-ui;
 }
 .left {
   z-index: 1;

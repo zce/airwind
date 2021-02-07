@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { watch, computed, onMounted, onUnmounted, defineProps, defineEmit } from 'vue'
+import { computed, watch, onMounted, onUnmounted, defineProps, defineEmit } from 'vue'
 import { colors } from '../utils/temperatures'
 
 const perspective = 500
@@ -61,7 +61,7 @@ const sweep = () => {
   requestAnimationFrame(update)
 }
 
-watch(() => props.mode, mode => mode === 'sweep' && sweep())
+watch(() => props.mode, mode => mode === 'sweep' && sweep(), { immediate: true })
 
 const style = computed(() => ({
   top: `${props.y}px`,
@@ -224,7 +224,7 @@ const style = computed(() => ({
 }
 @keyframes move {
   87.7% {
-    transform: scale(1, 2.6);
+    transform: scaleY(2.6);
     opacity: 0;
   }
   100% {
