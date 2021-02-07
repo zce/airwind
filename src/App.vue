@@ -27,7 +27,9 @@ import Picker from './components/Picker.vue'
 import Slider from './components/Slider.vue'
 import Switch from './components/Switch.vue'
 
-const state = reactive({
+import storage from './utils/storage'
+
+const defaults = {
   temperature: { left: 24.5, right: 26.5 },
   volume: 4,
   preset: { left: 'manual', right: 'manual' },
@@ -37,7 +39,9 @@ const state = reactive({
     { mode: 'manual', x: 790, y: 415, vertical: 75, horizontal: 75 },
     { mode: 'manual', x: 1060, y: 415, vertical: 75, horizontal: 75 }
   ]
-})
+}
+
+const state = reactive(storage.get('state') ?? defaults)
 
 watch(() => state.preset.left, preset => {
   console.log('preset.left', preset)
@@ -67,6 +71,9 @@ watch(() => state.preset.right, preset => {
   }
 })
 
+watch(() => state, state => {
+  storage.set('state', state)
+}, { deep: true })
 window.state = state
 </script>
 
