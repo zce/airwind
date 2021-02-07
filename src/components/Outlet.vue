@@ -1,18 +1,22 @@
 <template>
-  <div class="outlet" :style="{ top: `${y}px`, left: `${x}px`, transform: `perspective(${perspective}px) rotateX(${87 + vertical}deg) skewX(${horizontal}deg)` }">
-    <div class="layer" v-for="l in layerCount" :key="l">
-      <i v-for="p in particleCount" :key="p" />
+  <div class="outlet" :style="style">
+    <div class="layer">
+      <i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/>
+    </div>
+    <div class="layer">
+      <i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/><i/>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, defineProps, defineEmit, watch, useCssVars } from 'vue'
+import { watch, computed, onMounted, onUnmounted, defineProps, defineEmit } from 'vue'
 import { colors } from '../utils/temperatures'
 
-const layerCount = 2
-const particleCount = 30
 const perspective = 500
+
+const parse = input => input / 150 * 20 - 10
+const revert = input => (input + 10) / 20 * 150
 
 const props = defineProps({
   mode: String,
@@ -24,10 +28,7 @@ const props = defineProps({
   horizontal: Number
 })
 
-const emit = defineEmit([
-  'update:vertical',
-  'update:horizontal'
-])
+const emit = defineEmit(['update:vertical', 'update:horizontal'])
 
 const update = e => {
   const { clientX, clientY } = e.touches[0]
@@ -39,8 +40,8 @@ const update = e => {
   const va = -180 / (Math.PI / Math.atan(y / perspective))
   const ha = 180 / (Math.PI / Math.atan(x / perspective))
 
-  emit('update:vertical', va)
-  emit('update:horizontal', ha)
+  emit('update:vertical', revert(va))
+  emit('update:horizontal', revert(ha))
 }
 
 onMounted(() => window.addEventListener('touchmove', update, false))
@@ -48,12 +49,11 @@ onMounted(() => window.addEventListener('touchmove', update, false))
 onUnmounted(() => window.removeEventListener('touchmove', update))
 
 const sweep = () => {
-  let inc = 0.1
+  let inc = 0.3
   let angle = props.horizontal
   const update = () => {
     if (props.mode !== 'sweep') return
-    if (angle > 10) inc = -0.1
-    if (angle < -10) inc = 0.1
+    if (angle > 150 || angle < 0) inc = -inc
     angle += inc
     emit('update:horizontal', angle)
     requestAnimationFrame(update)
@@ -61,13 +61,15 @@ const sweep = () => {
   requestAnimationFrame(update)
 }
 
-watch(() => props.mode, mode => {
-  mode === 'sweep' && sweep()
-})
+watch(() => props.mode, mode => mode === 'sweep' && sweep())
 
-useCssVars(() => ({
-  size: 1 + 0.03 * props.volume,
-  color: colors[props.temperature]
+const style = computed(() => ({
+  top: `${props.y}px`,
+  left: `${props.x}px`,
+  transform: `perspective(${perspective}px) rotateX(${87 + parse(props.vertical)}deg) skewX(${parse(props.horizontal)}deg)`,
+
+  '--size': 1 + 0.03 * props.volume,
+  '--color': colors[props.temperature]
 }))
 </script>
 

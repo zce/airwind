@@ -32,10 +32,10 @@ const state = reactive({
   volume: 4,
   preset: { left: 'manual', right: 'manual' },
   outlets: [
-    { mode: 'manual', x: 220, y: 415, vertical: -1, horizontal: 0 },
-    { mode: 'manual', x: 490, y: 415, vertical: -1, horizontal: 0 },
-    { mode: 'manual', x: 790, y: 415, vertical: -1, horizontal: 0 },
-    { mode: 'manual', x: 1060, y: 415, vertical: -1, horizontal: 0 }
+    { mode: 'manual', x: 220, y: 415, vertical: 75, horizontal: 75 },
+    { mode: 'manual', x: 490, y: 415, vertical: 75, horizontal: 75 },
+    { mode: 'manual', x: 790, y: 415, vertical: 75, horizontal: 75 },
+    { mode: 'manual', x: 1060, y: 415, vertical: 75, horizontal: 75 }
   ]
 })
 
@@ -44,12 +44,12 @@ watch(() => state.preset.left, preset => {
   state.outlets[0].mode = preset
   state.outlets[1].mode = preset
   if (preset === 'focus') {
-    state.outlets[0].horizontal = 8
-    state.outlets[1].horizontal = -8
+    state.outlets[0].horizontal = 140
+    state.outlets[1].horizontal = 10
   }
   if (preset === 'avoid') {
-    state.outlets[0].horizontal = -8
-    state.outlets[1].horizontal = 8
+    state.outlets[0].horizontal = 10
+    state.outlets[1].horizontal = 140
   }
 })
 
@@ -58,24 +58,13 @@ watch(() => state.preset.right, preset => {
   state.outlets[2].mode = preset
   state.outlets[3].mode = preset
   if (preset === 'focus') {
-    state.outlets[2].horizontal = 8
-    state.outlets[3].horizontal = -8
+    state.outlets[2].horizontal = 140
+    state.outlets[3].horizontal = 10
   }
   if (preset === 'avoid') {
-    state.outlets[2].horizontal = -8
-    state.outlets[3].horizontal = 8
+    state.outlets[2].horizontal = 10
+    state.outlets[3].horizontal = 140
   }
-})
-
-// useCssVars(ctx => {
-//   return {
-//     'primary-color': '#ff0'
-//   }
-// })
-
-watch(() => state.volume, volume => {
-  console.log('volume', volume)
-
 })
 
 window.state = state
