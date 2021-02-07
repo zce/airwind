@@ -134,7 +134,7 @@ onUnmounted(() => document.removeEventListener('touchmove', update))
   position: relative;
   height: 800px;
   width: 1280px;
-  background: center/contain url(assets/background.png);
+  background: center/contain no-repeat url(assets/background.png);
   font-family: DSDIGI, system-ui;
 }
 .left {
