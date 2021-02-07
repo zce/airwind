@@ -1,15 +1,29 @@
 {
   "name": "airwind",
   "version": "0.1.0",
+  "description": "airwind application",
+  "keywords": [
+    "airwind",
+    "vue",
+    "vite",
+    "zce"
+  ],
+  "repository": "zce/airwind",
+  "license": "MIT",
+  "author": "zce <w@zce.me> (https://zce.me)",
+  "main": "n/a",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "dev": "vite"
+  },
+  "dependencies": {
+    "vant": "next",
+    "vue": "next"
   },
   "devDependencies": {
+    "@vitejs/plugin-legacy": "latest",
     "@vitejs/plugin-vue": "latest",
     "@vue/compiler-sfc": "latest",
-    "vant": "next",
-    "vite": "latest",
-    "vue": "next"
+    "vite": "latest"
   }
 }

@@ -1,7 +1,8 @@
 import vue from '@vitejs/plugin-vue'
+import legacy from '@vitejs/plugin-legacy'
 
 /** @type {import('vite').UserConfig} */
-module.exports = {
+export default {
   base: '',
-  plugins: [vue()]
+  plugins: [vue(), legacy({ targets: 'IE 11' })]
 }

@@ -124,7 +124,7 @@ onUnmounted(() => document.removeEventListener('touchmove', update))
 @font-face {
 	font-family: 'DSDIGI';
 	src: url(assets/DSDIGI.eot);
-	src: local('DSDIGI'), url(assets/DSDIGI.woff) format('woff'), url(assets/DSDIGI.ttf) format('truetype');
+	src: local('DSDIGI'), url(assets/DSDIGI.woff) format('woff'); /* , url(assets/DSDIGI.ttf) format('truetype') */
 }
 :root {
   --primary-color: #5dabee;
