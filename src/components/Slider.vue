@@ -37,6 +37,7 @@ defineEmit(['update:modelValue'])
 .van-slider {
   position: relative;
   flex: 1 1 0;
+  margin: 0 0.5rem;
   height: 0.5rem;
   background: #fff;
   border-radius: 2rem;
@@ -90,5 +91,6 @@ defineEmit(['update:modelValue'])
   width: 1.75rem;
   height: 1.75rem;
   color: var(--primary-color);
+  opacity: 0.6;
 }
 </style>

@@ -1,15 +1,15 @@
 {
   "name": "airwind",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
-    "build": "vite build",
-    "dev": "vite"
+    "dev": "vite",
+    "build": "vite build"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.1.4",
-    "@vue/compiler-sfc": "^3.0.5",
-    "vant": "^3.0.6",
-    "vite": "^2.0.0-0",
-    "vue": "^3.0.5"
+    "@vitejs/plugin-vue": "latest",
+    "@vue/compiler-sfc": "latest",
+    "vant": "next",
+    "vite": "latest",
+    "vue": "next"
   }
 }

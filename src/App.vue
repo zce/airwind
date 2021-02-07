@@ -32,30 +32,28 @@ import Switch from './components/Switch.vue'
 import storage from './utils/storage'
 
 const defaults = {
-  temperature: { left: 24.5, right: 26.5 },
   volume: 4,
+  temperature: { left: 24.5, right: 26.5 },
   preset: { left: 'manual', right: 'manual' },
   outlets: [
-    { x: 250, y: 415, vertical: 75, horizontal: 75 },
-    { x: 490, y: 415, vertical: 75, horizontal: 75 },
-    { x: 790, y: 415, vertical: 75, horizontal: 75 },
-    { x: 1030, y: 415, vertical: 75, horizontal: 75 }
+    { x: 250, y: 416, vertical: 65, horizontal: 75 },
+    { x: 490, y: 416, vertical: 65, horizontal: 75 },
+    { x: 790, y: 416, vertical: 65, horizontal: 75 },
+    { x: 1030, y: 416, vertical: 65, horizontal: 75 }
   ]
 }
 
-const state = reactive(storage.get('state') ?? defaults)
+const state = reactive(storage.get('state') || defaults)
 
 const persetChange = (align, o1, o2) => preset => {
   state.outlets[o1].transition = true
   state.outlets[o2].transition = true
   if (preset === 'focus') {
-    // TODO: transation
     state.outlets[o1].horizontal = 140
     state.outlets[o2].horizontal = 10
     return
   }
   if (preset === 'avoid') {
-    // TODO: transation
     state.outlets[o1].horizontal = 10
     state.outlets[o2].horizontal = 140
     return
@@ -85,13 +83,12 @@ watch(() => state.preset.left, persetChange('left', 0, 1))
 
 watch(() => state.preset.right, persetChange('right', 2, 3))
 
-watch(() => state, state => storage.set('state', state), { deep: true })
+watch(() => state, value => storage.set('state', value), { deep: true })
 
 const parse = input => input / 150 * 20 - 10
 const revert = input => (input + 10) / 20 * 150
 
 const update = e => {
-  // ignore if target not `i`
   if (e.target.tagName !== 'I') return
 
   const { clientX, clientY } = e.touches[0]
@@ -120,7 +117,7 @@ onMounted(() => document.addEventListener('touchmove', update, false))
 
 onUnmounted(() => document.removeEventListener('touchmove', update))
 
-window.state = state
+// window.state = state
 </script>
 
 <style>
