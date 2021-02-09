@@ -1,9 +1,11 @@
 {
-  "name": "airwind",
+  "name": "me.zce.airwind",
+  "displayName": "AirWind",
   "version": "0.1.0",
-  "description": "airwind application",
+  "description": "Automobile air conditioning wind control.",
   "keywords": [
     "airwind",
+    "cordova",
     "vue",
     "vite",
     "zce"
@@ -11,19 +13,25 @@
   "repository": "zce/airwind",
   "license": "MIT",
   "author": "zce <w@zce.me> (https://zce.me)",
-  "main": "n/a",
+  "main": "N/A",
   "scripts": {
     "build": "vite build",
     "dev": "vite"
   },
+  "cordova": {
+    "plugins": {},
+    "platforms": [
+      "browser"
+    ]
+  },
   "dependencies": {
-    "vant": "next",
-    "vue": "next"
+    "vant": "3.0.6",
+    "vue": "3.0.5"
   },
   "devDependencies": {
-    "@vitejs/plugin-legacy": "latest",
-    "@vitejs/plugin-vue": "latest",
-    "@vue/compiler-sfc": "latest",
-    "vite": "latest"
+    "@vitejs/plugin-vue": "1.1.4",
+    "@vue/compiler-sfc": "3.0.5",
+    "cordova-browser": "6.0.0",
+    "vite": "2.0.0-beta.66"
   }
 }

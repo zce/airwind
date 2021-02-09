@@ -1,9 +1,11 @@
 .DS_Store
 
-dist
-dist-ssr
+node_modules/
 
-node_modules
+/plugins/
+/platforms/
+
+/www/
 
 *.local
 
