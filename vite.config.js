@@ -2,7 +2,7 @@ import vue from '@vitejs/plugin-vue'
 
 /** @type {import('vite').UserConfig} */
 const config = {
-  // base: '',
+  base: '',
   build: {
     outDir: 'www'
   },

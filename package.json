@@ -21,7 +21,7 @@
   "cordova": {
     "plugins": {},
     "platforms": [
-      "browser"
+      "android"
     ]
   },
   "dependencies": {
@@ -31,7 +31,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "1.1.4",
     "@vue/compiler-sfc": "3.0.5",
-    "cordova-browser": "6.0.0",
+    "cordova-android": "9.0.0",
     "vite": "2.0.0-beta.66"
   }
 }
