@@ -49,6 +49,7 @@ const persetChange = (align, o1, o2) => preset => {
   state.outlets[o1].transition = true
   state.outlets[o2].transition = true
   if (preset === 'focus') {
+    USB2LIN.coolMethod('123213', alert)
     state.outlets[o1].horizontal = 140
     state.outlets[o2].horizontal = 10
     return
