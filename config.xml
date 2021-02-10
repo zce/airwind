@@ -7,4 +7,8 @@
   <access origin="*" />
   <icon src="src/assets/icon.png" />
   <preference name="Fullscreen" value="true" />
+  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="BackgroundColor" value="0xff0000ff"/>
+  <preference name="HideKeyboardFormAccessoryBar" value="true"/>
+  <preference name="Orientation" value="landscape" />
 </widget>
