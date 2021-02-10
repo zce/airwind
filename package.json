@@ -20,7 +20,8 @@
   },
   "cordova": {
     "plugins": {
-      "cordova-plugin-usb2lin": {}
+      "cordova-plugin-usb2lin": {},
+      "cordova-plugin-statusbar": {}
     },
     "platforms": [
       "android"
@@ -34,6 +35,7 @@
     "@vitejs/plugin-vue": "1.1.4",
     "@vue/compiler-sfc": "3.0.5",
     "cordova-android": "9.0.0",
+    "cordova-plugin-statusbar": "^2.4.3",
     "cordova-plugin-usb2lin": "file:usb2lin",
     "vite": "2.0.0-beta.66"
   }

@@ -130,6 +130,29 @@ onUnmounted(() => document.removeEventListener('touchmove', update))
   --primary-color: #5dabee;
   --primary-color-alpha: #5dabee40;
 }
+html, body {
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  touch-action: none;
+}
+body {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+  color: #fff;
+  background: #000;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+  -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+  -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+  user-select: none;
+}
 #app {
   position: relative;
   height: 800px;
