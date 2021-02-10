@@ -20,8 +20,7 @@
   },
   "cordova": {
     "plugins": {
-      "cordova-plugin-usb2lin": {},
-      "cordova-plugin-statusbar": {}
+      "cordova-plugin-usb2lin": {}
     },
     "platforms": [
       "android"
