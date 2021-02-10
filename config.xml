@@ -6,4 +6,5 @@
   <content src="index.html" />
   <access origin="*" />
   <icon src="src/assets/icon.png" />
+  <preference name="Fullscreen" value="true" />
 </widget>
