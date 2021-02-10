@@ -38,7 +38,7 @@ props.align === 'right' && actions.reverse()
 button {
   margin: 0.5rem;
   padding: 0.75rem 1.75rem;
-  border: 1px solid var(--primary-color);
+  border: 0.125rem solid var(--primary-color);
   border-radius: 2rem;
   background: var(--primary-color-alpha);
   color: var(--primary-color);

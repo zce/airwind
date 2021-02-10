@@ -13,8 +13,6 @@
 import { computed, defineProps } from 'vue'
 import { colors } from '../utils/temperatures'
 
-const perspective = 500
-
 const props = defineProps({
   volume: Number,
   temperature: Number,
@@ -31,7 +29,7 @@ const style = computed(() => ({
   transform: `perspective(500px) rotateX(${87 + props.vertical}deg) skewX(${props.horizontal}deg)`,
   transition: props.transition ? 'transform 500ms' : '',
 
-  '--size': 1 + 0.03 * props.volume,
+  '--size': props.volume && 0.5 + 0.06 * props.volume,
   '--color': colors[props.temperature]
 }))
 </script>
@@ -43,6 +41,8 @@ const style = computed(() => ({
 }
 .layer {
   position: absolute;
+  will-change: transform;
+  transition: transform 800ms;
 }
 .layer:nth-child(1) {
   transform: perspective(1000px) rotateX(1deg) translateZ(-1px) scale(0.8, var(--size, 1));
@@ -56,8 +56,6 @@ const style = computed(() => ({
   width: 30px;
   height: 150px;
   background: linear-gradient(var(--color, var(--primary-color)), #00000000);
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
   transform-origin: top;
   mix-blend-mode: screen;
   will-change: transform;

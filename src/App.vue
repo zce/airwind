@@ -49,7 +49,6 @@ const persetChange = (align, o1, o2) => preset => {
   state.outlets[o1].transition = true
   state.outlets[o2].transition = true
   if (preset === 'focus') {
-    USB2LIN.coolMethod('123213', alert)
     state.outlets[o1].horizontal = 140
     state.outlets[o2].horizontal = 10
     return
@@ -119,6 +118,7 @@ onMounted(() => document.addEventListener('touchmove', update, false))
 onUnmounted(() => document.removeEventListener('touchmove', update))
 
 // window.state = state
+// USB2LIN.coolMethod('123213', alert)
 </script>
 
 <style>
@@ -126,21 +126,20 @@ onUnmounted(() => document.removeEventListener('touchmove', update))
 	font-family: 'DSDIGI';
 	src: url(assets/DSDIGI.woff) format('woff');
 }
-:root {
-  --primary-color: #5dabee;
-  --primary-color-alpha: #5dabee40;
-}
-html, body {
-  overflow: hidden;
+html {
+  /* overflow: hidden; */
   height: 100%;
-  width: 100%;
-  touch-action: none;
 }
 body {
+  --primary-color: #5dabee;
+  --primary-color-alpha: #5dabee50;
+
+  /* overflow: hidden; */
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
   margin: 0;
   padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
   color: #fff;
@@ -148,9 +147,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
-  -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
-  -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+  -webkit-touch-callout: none;
+  text-size-adjust: none;
+  touch-action: none;
   user-select: none;
 }
 #app {
@@ -159,6 +158,7 @@ body {
   width: 1280px;
   background: center/contain no-repeat url(assets/background.png);
   font-family: DSDIGI, system-ui;
+  object-fit: contain;
 }
 .left {
   z-index: 1;
