@@ -14,19 +14,21 @@ public class USB2LIN extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if (action.equals("coolMethod")) {
-            String message = args.getString(0);
-            this.coolMethod(message, callbackContext);
+        if (action.equals("update")) {
+            int id = args.getInt(0);
+            int vertical = args.getInt(1);
+            int horizontal = args.getInt(2);
+            this.update(id, vertical, horizontal, callbackContext);
             return true;
         }
         return false;
     }
 
-    private void coolMethod(String message, CallbackContext callbackContext) {
-        if (message != null && message.length() > 0) {
-            callbackContext.success(message);
-        } else {
-            callbackContext.error("Expected one non-empty string argument.");
-        }
+    private void update(int id, int vertical, int horizontal, CallbackContext callbackContext) {
+        // TODO: to lin
+        // 成功回調
+        callbackContext.success(id);
+        // 失敗回調
+        // callbackContext.error("message");
     }
 }

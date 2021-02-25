@@ -30,6 +30,7 @@ import Slider from './components/Slider.vue'
 import Switch from './components/Switch.vue'
 
 import storage from './utils/storage'
+import throttle from './utils/throttle'
 
 const defaults = {
   volume: 4,
@@ -44,6 +45,38 @@ const defaults = {
 }
 
 const state = reactive(storage.get('state') || defaults)
+
+const parse = input => input / 150 * 20 - 10
+const revert = input => (input + 10) / 20 * 150
+
+const update = e => {
+  if (e.target.tagName !== 'I') return
+
+  const { clientX, clientY } = e.touches[0]
+  const { id, parentElement } = e.target.parentElement.parentElement
+  const { offsetLeft, offsetTop } = parentElement
+
+  const x = clientX - offsetLeft
+  const y = clientY - offsetTop
+
+  const current = state.outlets[id]
+
+  if (id < 2) {
+    state.preset.left = 'manual'
+  } else {
+    state.preset.right = 'manual'
+  }
+
+  const va = revert(-180 / (Math.PI / Math.atan((y - current.y) / 500)))
+  const ha = revert(180 / (Math.PI / Math.atan((x - current.x) / 500)))
+
+  if (va > 0 && va < 150) current.vertical = va
+  if (ha > 0 && ha < 150) current.horizontal = ha
+}
+
+onMounted(() => document.addEventListener('touchmove', update, false))
+
+onUnmounted(() => document.removeEventListener('touchmove', update))
 
 const persetChange = (align, o1, o2) => preset => {
   state.outlets[o1].transition = true
@@ -85,40 +118,19 @@ watch(() => state.preset.right, persetChange('right', 2, 3))
 
 watch(() => state, value => storage.set('state', value), { deep: true })
 
-const parse = input => input / 150 * 20 - 10
-const revert = input => (input + 10) / 20 * 150
+const outletUpdate = id => throttle(outlet => {
+  if (typeof USB2LIN !== 'undefined')
+    USB2LIN.update(id, outlet.vertical, outlet.horizontal, console.log)
+  else
+    console.log(id, outlet.vertical, outlet.horizontal)
+}, 1000)
 
-const update = e => {
-  if (e.target.tagName !== 'I') return
-
-  const { clientX, clientY } = e.touches[0]
-  const { id, parentElement } = e.target.parentElement.parentElement
-  const { offsetLeft, offsetTop } = parentElement
-
-  const x = clientX - offsetLeft
-  const y = clientY - offsetTop
-
-  const current = state.outlets[id]
-
-  if (id < 2) {
-    state.preset.left = 'manual'
-  } else {
-    state.preset.right = 'manual'
-  }
-
-  const va = revert(-180 / (Math.PI / Math.atan((y - current.y) / 500)))
-  const ha = revert(180 / (Math.PI / Math.atan((x - current.x) / 500)))
-
-  if (va > 0 && va < 150) current.vertical = va
-  if (ha > 0 && ha < 150) current.horizontal = ha
-}
-
-onMounted(() => document.addEventListener('touchmove', update, false))
-
-onUnmounted(() => document.removeEventListener('touchmove', update))
+watch(() => state.outlets[0], outletUpdate(0), { deep: true })
+watch(() => state.outlets[1], outletUpdate(1), { deep: true })
+watch(() => state.outlets[2], outletUpdate(2), { deep: true })
+watch(() => state.outlets[3], outletUpdate(3), { deep: true })
 
 // window.state = state
-// USB2LIN.coolMethod('123213', alert)
 </script>
 
 <style>

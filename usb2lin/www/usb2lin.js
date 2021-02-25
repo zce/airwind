@@ -1,5 +1,6 @@
 var exec = require('cordova/exec');
 
-exports.coolMethod = function (arg0, success, error) {
-    exec(success, error, 'USB2LIN', 'coolMethod', [arg0]);
+exports.update = function (id, vertical, horizontal, success, error) {
+  var args = [id, Math.round(vertical), Math.round(horizontal)];
+  exec(success, error, 'USB2LIN', 'update', args);
 };
