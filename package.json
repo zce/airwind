@@ -16,7 +16,10 @@
   "main": "N/A",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "postinstall": "cordova platform add android",
+    "pack": "cordova build android",
+    "dev": "cordova run android"
   },
   "cordova": {
     "plugins": {
