@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <plugin id="cordova-plugin-usb2lin" version="0.1.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
   <name>USB2LIN</name>
-  <js-module name="USB2LIN" src="www/usb2lin.js">
+  <js-module name="USB2LIN" src="usb2lin.js">
     <clobbers target="USB2LIN" />
   </js-module>
   <platform name="android">
@@ -11,6 +11,6 @@
       </feature>
     </config-file>
     <config-file parent="/*" target="AndroidManifest.xml"></config-file>
-    <source-file src="src/android/USB2LIN.java" target-dir="src/org/apache/cordova/usb2lin" />
+    <source-file src="USB2LIN.java" target-dir="src/org/apache/cordova/usb2lin" />
   </platform>
 </plugin>
