@@ -15,19 +15,22 @@
   "author": "zce <w@zce.me> (https://zce.me)",
   "main": "N/A",
   "scripts": {
+    "clean": "vue-cli-service clean",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "platform": "cordova platform add android",
-    "postinstall": "npm run build && npm run platform",
-    "pack": "cordova build android",
-    "dev": "cordova run android"
+    "develop": "vue-cli-service develop"
   },
   "cordova": {
-    "plugins": {
-      "cordova-plugin-usb2lin": {}
-    },
     "platforms": [
       "android"
+    ],
+    "plugins": {
+      "cordova-plugin-native": {}
+    }
+  },
+  "vuePlugins": {
+    "service": [
+      "scripts/cordova.js"
     ]
   },
   "dependencies": {
@@ -37,8 +40,8 @@
   "devDependencies": {
     "@vue/cli-service": "4.5.11",
     "@vue/compiler-sfc": "3.0.7",
-    "cordova": "^10.0.0",
+    "cordova": "10.0.0",
     "cordova-android": "9.0.0",
-    "cordova-plugin-usb2lin": "file:usb2lin"
+    "cordova-plugin-native": "file:native"
   }
 }

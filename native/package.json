@@ -1,7 +1,7 @@
 {
-  "name": "cordova-plugin-usb2lin",
+  "name": "cordova-plugin-native",
   "version": "0.1.0",
-  "description": "usb2lin cordova plugin",
+  "description": "native cordova plugin",
   "author": "zce <w@zce.me> (https://zce.me)",
   "license": "MIT"
 }

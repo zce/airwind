@@ -22,18 +22,6 @@ $ npm run serve
 ## Android 运行步骤
 
 ```shell
-$ npm run dev
-```
-
-## 屏幕适配问题
-
-platforms/android/app/src/main/java/me/zce/airwind/MainActivity.java onCreate 最后添加以下代码：
-
-```java
-import android.webkit.WebView;
-
-// Viewport adaptation
-WebView webView = (WebView) appView.getView();
-webView.getSettings().setLoadWithOverviewMode(true);
-webView.getSettings().setUseWideViewPort(true);
+$ npm run build
+$ npm run develop
 ```
