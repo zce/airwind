@@ -3,11 +3,6 @@
 ## 环境配置
 
 - Node.js 14.x (内置 npm)
-- Cordova 10.0.0
-
-```shell
-$ npm install cordova -g
-```
 
 ## 浏览器运行步骤
 

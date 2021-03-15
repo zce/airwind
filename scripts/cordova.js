@@ -20,7 +20,7 @@ const build = api => {
   build.fn = (...args) => {
     return originalBuild(...args)
       .then(() => cordova.cli([arg1, arg2, 'prepare']))
-      .then(() => cordova.cli([arg1, arg2, 'build']))
+      .then(() => cordova.cli([arg1, arg2, 'compile']))
       .catch(e => console.error(e.message))
   }
 }

@@ -16,9 +16,9 @@ public class Native extends CordovaPlugin {
     private void update(int id, int vertical, int horizontal, CallbackContext callback) {
         // TODO: to lin
         Log.i("USB2LIN", "id: " + id + ", vertical:" + vertical + ", horizontal:" + horizontal);
-        // 成功回調
+        // 成功回调
         callback.success(id);
-        // 失敗回調
+        // 失败回调
         // callback.error("message");
     }
 

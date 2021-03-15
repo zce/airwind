@@ -119,8 +119,8 @@ watch(() => state.preset.right, persetChange('right', 2, 3))
 watch(() => state, value => storage.set('state', value), { deep: true })
 
 const outletUpdate = id => throttle(outlet => {
-  if (typeof USB2LIN !== 'undefined')
-    USB2LIN.update(id, outlet.vertical, outlet.horizontal, console.log)
+  if (typeof Native !== 'undefined')
+    Native.update(id, outlet.vertical, outlet.horizontal, console.log)
   else
     console.log(id, outlet.vertical, outlet.horizontal)
 }, 1000)
