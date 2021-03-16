@@ -4,7 +4,7 @@ const { cordova } = require('cordova-lib')
 const clean = api => {
   api.registerCommand('clean', args => {
     return cordova.clean()
-      .catch(e => console.error(e.message))
+      .catch(console.error)
   })
 }
 
@@ -18,7 +18,7 @@ const build = api => {
     return originalBuild(...args)
       .then(() => cordova.prepare())
       .then(() => cordova.compile({ options: args[0] }))
-      .catch(e => console.error(e.message))
+      .catch(console.error)
   }
 }
 
@@ -26,7 +26,7 @@ const build = api => {
 const develop = api => {
   api.registerCommand('develop', args => {
     return cordova.run()
-      .catch(e => console.error(e.message))
+      .catch(console.error)
   })
 }
 
