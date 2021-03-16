@@ -2,6 +2,12 @@
 
 ## 环境配置
 
+- JDK
+  - JAVA_HOME
+- Android
+  - ANDROID_SDK_ROOT
+- Gradle
+  - PATH
 - Node.js 14.x (内置 npm)
 
 ```shell
