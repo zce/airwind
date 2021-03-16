@@ -23,6 +23,7 @@
     <config-file parent="/*" target="res/xml/config.xml">
       <feature name="Native">
         <param name="android-package" value="me.zce.airwind.Native" />
+        <param name="onload" value="true" />
       </feature>
     </config-file>
     <config-file parent="/*" target="AndroidManifest.xml">
