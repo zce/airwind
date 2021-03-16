@@ -27,6 +27,14 @@ $ npm run develop
 
 ## 打包 APK
 
+打包 debug 版本
+
 ```shell
 $ npm run build
+```
+
+打包发行版本
+
+```shell
+$ npm run build -- --release
 ```
