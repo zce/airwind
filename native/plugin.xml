@@ -11,13 +11,13 @@
     <source-file src="src/USBDevice.java" target-dir="src/me/zce/airwind" />
     <source-file src="src/USBList.java" target-dir="src/me/zce/airwind" />
     <source-file src="src/USBManager.java" target-dir="src/me/zce/airwind" />
-    <source-file src="src/libs/arm64-v8a" target-dir="jniLibs/arm64-v8a" />
-    <source-file src="src/libs/armeabi" target-dir="jniLibs/armeabi" />
-    <source-file src="src/libs/armeabi-v7a" target-dir="jniLibs/armeabi-v7a" />
-    <source-file src="src/libs/mips" target-dir="jniLibs/mips" />
-    <source-file src="src/libs/mips64" target-dir="jniLibs/mips64" />
-    <source-file src="src/libs/x86" target-dir="jniLibs/x86" />
-    <source-file src="src/libs/x86_64" target-dir="jniLibs/x86_64" />
+    <source-file src="src/libs/arm64-v8a" target-dir="jniLibs" />
+    <source-file src="src/libs/armeabi" target-dir="jniLibs" />
+    <source-file src="src/libs/armeabi-v7a" target-dir="jniLibs" />
+    <source-file src="src/libs/mips" target-dir="jniLibs" />
+    <source-file src="src/libs/mips64" target-dir="jniLibs" />
+    <source-file src="src/libs/x86" target-dir="jniLibs" />
+    <source-file src="src/libs/x86_64" target-dir="jniLibs" />
     <lib-file src="src/libs/jna-min.jar" arch="device" />
     <lib-file src="src/libs/jna-platform.jar" arch="device" />
     <config-file parent="/*" target="res/xml/config.xml">

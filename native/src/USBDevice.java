@@ -14,16 +14,16 @@ public interface USBDevice extends Library {
 
     //定义设备信息
     public class DEVICE_INFO extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+             // TODO Auto-generated method stub
+             return Arrays.asList(new String[]{"FirmwareName", "BuildDate", "HardwareVersion", "FirmwareVersion", "SerialNumber", "Functions"});
+        }
+
         public static class ByReference extends DEVICE_INFO implements Structure.ByReference {
         }
 
         public static class ByValue extends DEVICE_INFO implements Structure.ByValue {
-        }
-
-        @Override
-        protected List getFieldOrder() {
-            // TODO Auto-generated method stub
-            return Arrays.asList(new String[]{"FirmwareName", "BuildDate", "HardwareVersion", "FirmwareVersion", "SerialNumber", "Functions"});
         }
 
         public byte[] FirmwareName = new byte[32];    //固件名称字符串

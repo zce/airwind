@@ -12,17 +12,16 @@ public interface USB2LINEX extends Library {
 
     //定义LIN消息帧结构体
     public class LIN_EX_MSG extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            // TODO Auto-generated method stub
+            return Arrays.asList(new String[]{"Timestamp", "MsgType", "CheckType", "DataLen", "Sync", "PID", "Data", "Check", "BreakBits", "Reserve1"});
+        }
 
         public static class ByReference extends LIN_EX_MSG implements Structure.ByReference {
         }
 
         public static class ByValue extends LIN_EX_MSG implements Structure.ByValue {
-        }
-
-        @Override
-        protected List getFieldOrder() {
-            // TODO Auto-generated method stub
-            return Arrays.asList(new String[]{"Timestamp", "MsgType", "CheckType", "DataLen", "Sync", "PID", "Data", "Check", "BreakBits", "Reserve1"});
         }
 
         public int Timestamp;                //从机接收数据时代表时间戳，单位为0.1ms;主机读写数据时，表示数据读写后的延时时间，单位为ms

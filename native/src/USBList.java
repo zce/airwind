@@ -13,16 +13,16 @@ public interface USBList extends Library {
 
     //定义设备信息
     public class usb_list extends Structure {
+        @Override
+        protected List<String> getFieldOrder() {
+            // TODO Auto-generated method stub
+            return Arrays.asList(new String[]{"next", "prev", "dev", "handle", "DevHandle", "android_fd"});
+        }
+
         public static class ByReference extends usb_list implements Structure.ByReference {
         }
 
         public static class ByValue extends usb_list implements Structure.ByValue {
-        }
-
-        @Override
-        protected List getFieldOrder() {
-            // TODO Auto-generated method stub
-            return Arrays.asList(new String[]{"next", "prev", "dev", "handle", "DevHandle", "android_fd"});
         }
 
         public int next;
