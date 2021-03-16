@@ -161,6 +161,5 @@ defineEmit(['update:modelValue'])
 .icon {
   margin: 0 0.75rem;
   color: var(--primary-color);
-  opacity: 0.8;
 }
 </style>
