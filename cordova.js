@@ -1,26 +1,23 @@
-const cordova = require('cordova')
+const { cordova } = require('cordova-lib')
 
 /** @type {import('@vue/cli-service').ServicePlugin} */
 const clean = api => {
   api.registerCommand('clean', args => {
-    const [arg1, arg2] = process.argv
-    return cordova.cli([arg1, arg2, 'clean'])
+    return cordova.clean()
       .catch(e => console.error(e.message))
   })
 }
 
 /** @type {import('@vue/cli-service').ServicePlugin} */
 const build = api => {
-  const [arg1, arg2] = process.argv
-
   const { build } = api.service.commands
 
   const originalBuild = build.fn
 
   build.fn = (...args) => {
     return originalBuild(...args)
-      .then(() => cordova.cli([arg1, arg2, 'prepare']))
-      .then(() => cordova.cli([arg1, arg2, 'compile']))
+      .then(() => cordova.prepare())
+      .then(() => cordova.compile())
       .catch(e => console.error(e.message))
   }
 }
@@ -28,8 +25,7 @@ const build = api => {
 /** @type {import('@vue/cli-service').ServicePlugin} */
 const develop = api => {
   api.registerCommand('develop', args => {
-    const [arg1, arg2] = process.argv
-    return cordova.cli([arg1, arg2, 'run'])
+    return cordova.run()
       .catch(e => console.error(e.message))
   })
 }

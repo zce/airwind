@@ -23,7 +23,7 @@ $ npm run serve
 $ npm run develop
 ```
 
-> 需要先 build
+> 第一次需要先执行 build 任务
 
 ## 打包 APK
 
