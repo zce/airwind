@@ -2,13 +2,14 @@ package me.zce.airwind;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaWebView;
 
+import android.webkit.WebView;
+import android.webkit.WebSettings;
 import android.util.Log;
 
 /**
@@ -22,42 +23,7 @@ public class Native extends CordovaPlugin {
     private int[] devices = new int[10];
     private int deviceCount = 0;
 
-    /**
-     * 风口角度更新，调动风口角度时自动调用，最小调用间隔 1 秒
-     * id: 风口 ID，0-3 分别从左至右
-     * vertical: 更新后的垂直角度（0-150）
-     * horizontal: 更新后的水平角度（0-150）
-     */
-    private void update(int id, int vertical, int horizontal, CallbackContext callback) {
-        // Log.i(TAG, "id: " + id + ", vertical:" + vertical + ", horizontal:" + horizontal);
-
-        // 没找到设备
-        if (devices[id] == 0) {
-            Log.i(TAG, "没找到 " + id + " 设备");
-            return;
-        }
-
-        // 这里发送数据
-
-        // 主机模式发送数据
-        byte write_pid = 0x11;
-        byte[] write_data = {0x01, 0x00, 0x00, (byte) 0xd0, 0x00, 0x00, 0x00, 0x00};
-        int ret = USB2LINEX.INSTANCE.LIN_EX_MasterWrite(devices[id], (byte) 0, write_pid, write_data, (byte) write_data.length, USB2LINEX.LIN_EX_CHECK_EXT);
-
-        if (ret == USB2LINEX.LIN_EX_SUCCESS) {
-            Log.i(TAG, "【" + id + "】信号发送成功");
-        } else {
-            Log.i(TAG, "【" + id + "】信号发送失败");
-        }
-
-        // 成功回调
-        callback.success(id);
-        // 失败回调
-        // callback.error("message");
-    }
-
-    @Override
-    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+    private void init() {
         Log.i(TAG, "开始初始化 USB");
 
         if (!usbManager.USBInit(cordova.getActivity().getApplicationContext())) {
@@ -121,20 +87,36 @@ public class Native extends CordovaPlugin {
         }
     }
 
-    @Override
-    public boolean execute(String action, JSONArray args, CallbackContext callback) throws JSONException {
-        if (!action.equals("update")) return false;
-        int id = args.getInt(0);
-        int vertical = args.getInt(1);
-        int horizontal = args.getInt(2);
-        this.update(id, vertical, horizontal, callback);
-        return true;
+    private void update(int id, int vertical, int horizontal, CallbackContext callback) {
+        // // TODO: to lin
+        // Log.i(TAG, "id: " + id + ", vertical:" + vertical + ", horizontal:" + horizontal);
+        // 没找到设备
+        if (devices[id] == 0) {
+            Log.i(TAG, "没找到 " + id + " 设备");
+            return;
+        }
+
+        // 这里发送数据
+
+        // 主机模式发送数据
+        byte write_pid = 0x11;
+        byte[] write_data = {0x01, 0x00, 0x00, (byte) 0xd0, 0x00, 0x00, 0x00, 0x00};
+        int ret = USB2LINEX.INSTANCE.LIN_EX_MasterWrite(devices[id], (byte) 0, write_pid, write_data, (byte) write_data.length, USB2LINEX.LIN_EX_CHECK_EXT);
+
+        if (ret == USB2LINEX.LIN_EX_SUCCESS) {
+            Log.i(TAG, "【" + id + "】信号发送成功");
+        } else {
+            Log.i(TAG, "【" + id + "】信号发送失败");
+        }
+
+        // 成功回调
+        callback.success(id);
+        // 失败回调
+        // callback.error("message");
     }
 
-    @Override
-    public void onDestroy() {
+    private void close() {
         Log.i(TAG, "尝试关闭所有设备");
-        // 关闭每一个设备
         for (int i = 0; i < deviceCount; i++) {
             int device = devices[i];
             boolean succeed = USBDevice.INSTANCE.USB_CloseDevice(device);
@@ -144,5 +126,32 @@ public class Native extends CordovaPlugin {
                 Log.i(TAG, "关闭设备【" + device + "】失败");
             }
         }
+    }
+
+    @Override
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        // viewport adaptation patch
+        WebView view = (WebView) webView.getView();
+        WebSettings settings = view.getSettings();
+        settings.setLoadWithOverviewMode(true);
+        settings.setUseWideViewPort(true);
+        // init usb device
+        init();
+    }
+
+    @Override
+    public boolean execute(String action, JSONArray args, CallbackContext callback) throws JSONException {
+        if (!action.equals("update")) return false;
+        int id = args.getInt(0);
+        int vertical = args.getInt(1);
+        int horizontal = args.getInt(2);
+        update(id, vertical, horizontal, callback);
+        return true;
+    }
+
+    @Override
+    public void onDestroy() {
+        // close all devices
+        close();
     }
 }

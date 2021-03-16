@@ -1,7 +1,7 @@
 package me.zce.airwind;
 
-import com.sun.jna.Library;
 import com.sun.jna.Native;
+import com.sun.jna.Library;
 
 public interface Lock extends Library {
     Lock INSTANCE = (Lock) Native.loadLibrary("USB2XXX", Lock.class);

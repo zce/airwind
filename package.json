@@ -30,7 +30,7 @@
   },
   "vuePlugins": {
     "service": [
-      "scripts/cordova.js"
+      "cordova.js"
     ]
   },
   "dependencies": {

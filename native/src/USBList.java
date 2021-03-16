@@ -2,8 +2,8 @@ package me.zce.airwind;
 import java.util.Arrays;
 import java.util.List;
 
-import com.sun.jna.Library;
 import com.sun.jna.Native;
+import com.sun.jna.Library;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="me.zce.airwind" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="me.zce.airwind" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>AirWind</name>
   <description>Automobile air conditioning wind control.</description>
   <author email="w@zce.me" href="https://zce.me">汪磊</author>
@@ -11,5 +11,4 @@
   <preference name="BackgroundColor" value="0xff000000"/>
   <preference name="HideKeyboardFormAccessoryBar" value="true"/>
   <preference name="Orientation" value="landscape" />
-  <hook type="after_platform_add" src="scripts/patch-viewport.js" />
 </widget>
