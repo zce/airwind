@@ -22,9 +22,15 @@ public class Native extends CordovaPlugin {
     private int[] devices = new int[10];
     private int deviceCount = 0;
 
+    /**
+     * 风口角度更新，调动风口角度时自动调用，最小调用间隔 1 秒
+     * id: 风口 ID，0-3 分别从左至右
+     * vertical: 更新后的垂直角度（0-150）
+     * horizontal: 更新后的水平角度（0-150）
+     */
     private void update(int id, int vertical, int horizontal, CallbackContext callback) {
-        // // TODO: to lin
         // Log.i(TAG, "id: " + id + ", vertical:" + vertical + ", horizontal:" + horizontal);
+
         // 没找到设备
         if (devices[id] == 0) {
             Log.i(TAG, "没找到 " + id + " 设备");
