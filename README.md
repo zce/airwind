@@ -4,11 +4,14 @@
 
 - Node.js 14.x (内置 npm)
 
-## 浏览器运行步骤
-
 ```shell
 $ cd path/to/project
 $ npm install # 安装依赖
+```
+
+## 浏览器运行步骤
+
+```shell
 $ npm run serve
 ```
 
@@ -17,6 +20,13 @@ $ npm run serve
 ## Android 运行步骤
 
 ```shell
-$ npm run build
 $ npm run develop
+```
+
+> 需要先 build
+
+## 打包 APK
+
+```shell
+$ npm run build
 ```
