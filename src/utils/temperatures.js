@@ -1,12 +1,10 @@
+// 所有的温度值（16 - 32）
 export const temps = Array(33).fill(16).map((item, i) => item + i * 0.5).reverse()
 
+// 温度值展示到界面上的文本（20 → 20.0）
 export const columns = temps.map(i => ({ text: i.toFixed(1), value: i }))
 
-// export const colors = temps.reduce((prev, current, i) => ({
-//   ...prev,
-//   [current]: `rgb(${Math.floor(255 / 33 * i)}, 180, 180)`
-// }), {})
-
+// 色阶
 const presetColors = [
   '#bf0000',
   '#d20000',
@@ -42,6 +40,8 @@ const presetColors = [
   '#0053fc',
   '#0047e9'
 ]
+
+// 温度值与颜色之间的映射关系
 export const colors = temps.reduce((prev, current, i) => ({
   ...prev,
   [current]: presetColors[i]

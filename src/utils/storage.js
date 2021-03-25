@@ -4,8 +4,6 @@
  * @example
  *   storage.get( ... )
  *   storage.set( ... )
- *   storage.remove( ... )
- *   storage.clear( ... )
  */
 
 // @ts-check
@@ -27,12 +25,5 @@ export default {
   set: (key, value) => {
     const json = JSON.stringify(value)
     localStorage.setItem(prefix + key, json)
-  },
-  /** @param {string} key */
-  remove: key => {
-    localStorage.removeItem(prefix + key)
-  },
-  clear: () => {
-    localStorage.clear()
   }
 }
