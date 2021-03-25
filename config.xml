@@ -1,10 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="me.zce.airwind" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="me.zce.airwind" version="0.1.0" xmlns="http://www.w3.org/ns/widgets">
   <name>AirWind</name>
   <description>Automobile air conditioning wind control.</description>
   <author email="w@zce.me" href="https://zce.me">汪磊</author>
   <icon src="src/assets/icon.png" />
-  <access origin="*" />
   <content src="index.html" />
   <preference name="Fullscreen" value="true" />
   <preference name="DisallowOverscroll" value="true"/>
