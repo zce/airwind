@@ -51,13 +51,13 @@ const useState = () => {
     },
     // 出风口位置（跟电机无关）及角度
     // x、y: 风口在屏幕上的位置
-    // vertical: 垂直角度（0 - 150）
-    // horizontal: 水平角度（0 - 150）
+    // vertical: 垂直角度（0 - 650）
+    // horizontal: 水平角度（0 - 650）
     outlets: [
-      { x: 250, y: 416, vertical: 65, horizontal: 75 }, // 0 号风口
-      { x: 490, y: 416, vertical: 65, horizontal: 75 }, // 1 号风口
-      { x: 790, y: 416, vertical: 65, horizontal: 75 }, // 2 号风口
-      { x: 1030, y: 416, vertical: 65, horizontal: 75 } // 3 号风口
+      { x: 250, y: 416, vertical: 300, horizontal: 325 }, // 0 号风口
+      { x: 490, y: 416, vertical: 300, horizontal: 325 }, // 1 号风口
+      { x: 790, y: 416, vertical: 300, horizontal: 325 }, // 2 号风口
+      { x: 1030, y: 416, vertical: 300, horizontal: 325 } // 3 号风口
     ]
   })
 
@@ -79,9 +79,9 @@ const useState = () => {
 const state = useState()
 
 // #region 风口角度控制逻辑
-// 角度转换函数，程序界面上是 10 - -10，而业务数据是 0 - 150
-const parse = input => input / 150 * 20 - 10
-const revert = input => (input + 10) / 20 * 150
+// 角度转换函数，程序界面上是 10 - -10，而业务数据是 0 - 650
+const parse = input => input / 650 * 20 - 10
+const revert = input => (input + 10) / 20 * 650
 
 // 拖拽事件处理函数，风口角度更新逻辑，当拖拽任何一个风口自动执行
 const update = e => {
@@ -114,8 +114,8 @@ const update = e => {
   const ha = revert(180 / (Math.PI / Math.atan((x - current.x) / 500)))
 
   // 控制拖拽角度变化的最大值与最小值
-  if (va > 0 && va < 150) current.vertical = va
-  if (ha > 0 && ha < 150) current.horizontal = ha
+  if (va > 0 && va < 650) current.vertical = va
+  if (ha > 0 && ha < 650) current.horizontal = ha
 }
 
 // 绑定拖拽事件
@@ -146,22 +146,22 @@ const persetChange = (align, o1, o2) => preset => {
 
   // 聚焦模式
   if (preset === 'focus') {
-    state.outlets[o1].horizontal = 140 // 单侧第一个风口 140 度
-    state.outlets[o2].horizontal = 10 // 单侧第二个风口 10 度
+    state.outlets[o1].horizontal = 620 // 单侧第一个风口 620 步
+    state.outlets[o2].horizontal = 30 // 单侧第二个风口 30 步
     return
   }
 
   // 避脸模式
   if (preset === 'avoid') {
-    state.outlets[o1].horizontal = 10 // 单侧第一个风口 10 度
-    state.outlets[o2].horizontal = 140 // 单侧第二个风口 140 度
+    state.outlets[o1].horizontal = 30 // 单侧第一个风口 30 步
+    state.outlets[o2].horizontal = 620 // 单侧第二个风口 620 步
     return
   }
 
   // 扫风
   if (preset === 'sweep') {
-    let inc1 = 0.5 // 单侧第一个风口每帧增加 0.5 度，值越大，扫风运动越快速
-    let inc2 = 0.5 // 单侧第二个风口每帧增加 0.5 度
+    let inc1 = 2.5 // 单侧第一个风口每帧增加 2.5 步，值越大，扫风运动越快速
+    let inc2 = 2.5 // 单侧第二个风口每帧增加 2.5 步
 
     let angle1 = state.outlets[o1].horizontal // 当前单侧第一个风口横向角度
     let angle2 = state.outlets[o2].horizontal // 当前单侧第二个风口横向角度
@@ -169,9 +169,9 @@ const persetChange = (align, o1, o2) => preset => {
       // 如果此侧预设模式不再是扫风，则停止角度变化
       if (state.preset[align] !== 'sweep') return
 
-      // 边界值，只允许在角度 0 - 150 之间
-      if (angle1 > 150 || angle1 < 0) inc1 = -inc1
-      if (angle2 > 150 || angle2 < 0) inc2 = -inc2
+      // 边界值，只允许在角度 0 - 650 之间
+      if (angle1 > 650 || angle1 < 0) inc1 = -inc1
+      if (angle2 > 650 || angle2 < 0) inc2 = -inc2
 
       // 角度变化
       angle1 += inc1
