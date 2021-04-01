@@ -6,19 +6,11 @@
     <Switch align="left" v-model="state.preset.left" />
     <Switch align="right" v-model="state.preset.right" />
   </div>
-  <Outlet
-    v-for="(item, i) in state.outlets"
-    :key="i"
-    :id="i"
-    :mode="item.mode"
-    :volume="state.volume"
-    :temperature="i < 2 ? state.temperature.left : state.temperature.right"
-    :x="item.x"
-    :y="item.y"
-    :vertical="parse(item.vertical)"
-    :horizontal="parse(item.horizontal)"
-    :transition="item.transition"
-  />
+  <!-- x、y: 风口在屏幕上的位置 -->
+  <Outlet :id="0" :x="250" :y="416" :mode="state.outlets[0].mode" :vertical="parse(state.outlets[0].vertical)" :horizontal="parse(state.outlets[0].horizontal)" :volume="state.volume" :temperature="state.temperature.left" :transition="state.outlets[0].transition"/>
+  <Outlet :id="1" :x="490" :y="416" :mode="state.outlets[1].mode" :vertical="parse(state.outlets[1].vertical)" :horizontal="parse(state.outlets[1].horizontal)" :volume="state.volume" :temperature="state.temperature.left" :transition="state.outlets[1].transition"/>
+  <Outlet :id="2" :x="790" :y="416" :mode="state.outlets[2].mode" :vertical="parse(state.outlets[2].vertical)" :horizontal="parse(state.outlets[2].horizontal)" :volume="state.volume" :temperature="state.temperature.right" :transition="state.outlets[2].transition"/>
+  <Outlet :id="3" :x="1030" :y="416" :mode="state.outlets[3].mode" :vertical="parse(state.outlets[3].vertical)" :horizontal="parse(state.outlets[3].horizontal)" :volume="state.volume" :temperature="state.temperature.right" :transition="state.outlets[3].transition"/>
 </template>
 
 <script setup>
@@ -50,14 +42,13 @@ const useState = () => {
       right: 'manual' // 右侧预设模式
     },
     // 出风口位置（跟电机无关）及角度
-    // x、y: 风口在屏幕上的位置
     // vertical: 垂直角度（0 - 650）
     // horizontal: 水平角度（0 - 650）
     outlets: [
-      { x: 250, y: 416, vertical: 300, horizontal: 325 }, // 0 号风口
-      { x: 490, y: 416, vertical: 300, horizontal: 325 }, // 1 号风口
-      { x: 790, y: 416, vertical: 300, horizontal: 325 }, // 2 号风口
-      { x: 1030, y: 416, vertical: 300, horizontal: 325 } // 3 号风口
+      { vertical: 300, horizontal: 325 }, // 0 号风口
+      { vertical: 300, horizontal: 325 }, // 1 号风口
+      { vertical: 300, horizontal: 325 }, // 2 号风口
+      { vertical: 300, horizontal: 325 } // 3 号风口
     ]
   })
 
