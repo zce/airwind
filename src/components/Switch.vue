@@ -32,9 +32,6 @@ props.align === 'right' && actions.reverse()
 </script>
 
 <style>
-.switch {
-  padding: 4rem;
-}
 button {
   margin: 0.5rem;
   padding: 0.75rem 1.75rem;
@@ -43,6 +40,7 @@ button {
   background: var(--primary-color-alpha);
   color: var(--primary-color);
   font-size: 1.25rem;
+  font-weight: 500;
   box-shadow: 0 0 0.5rem var(--primary-color-alpha);
   outline: 0;
   transition: background 300ms, color 300ms;

@@ -101,7 +101,6 @@ defineEmit(['update:modelValue'])
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 5rem 20rem;
   padding: 1rem;
   border-radius: 2rem;
   background: rgba(0, 0, 0, 0.5);

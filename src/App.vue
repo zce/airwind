@@ -204,21 +204,18 @@ watch(() => state.preset.right, persetChange('right', 2, 3))
 	src: url(assets/DSDIGI.woff) format('woff');
 }
 html {
-  /* overflow: hidden; */
   height: 100%;
 }
 body {
   --primary-color: #5dabee;
   --primary-color-alpha: #5dabee50;
 
-  /* overflow: hidden; */
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
   margin: 0;
-  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
   color: #fff;
   background: #000;
   -webkit-font-smoothing: antialiased;
@@ -231,11 +228,22 @@ body {
 }
 #app {
   position: relative;
-  height: 800px;
   width: 1280px;
+  height: 800px;
   background: center/contain no-repeat url(assets/background.png);
   font-family: DSDIGI, system-ui;
-  object-fit: contain;
+}
+#app::after {
+  content: '';
+  display: block;
+  padding-bottom: 62.5%;
+}
+.top {
+  position: absolute;
+  top: 5rem;
+  left: 20rem;
+  right: 20rem;
+  z-index: 1;
 }
 .left {
   z-index: 1;
@@ -254,11 +262,11 @@ body {
   width: 10rem;
 }
 .bottom {
-  z-index: 1;
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: 5rem;
+  right: 5rem;
+  bottom: 4rem;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
 }
