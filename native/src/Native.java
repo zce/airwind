@@ -20,8 +20,8 @@ public class Native extends CordovaPlugin {
 
     private USBManager usbManager = new USBManager();
 
-    private int[] devices = new int[10];
     private int deviceCount = 0;
+    private int[] devices = new int[5];
 
     private void init() {
         Log.i(TAG, "开始初始化 USB");
@@ -88,31 +88,40 @@ public class Native extends CordovaPlugin {
     }
 
     private void update(int id, int vertical, int horizontal, CallbackContext callback) {
-        // // TODO: to lin
-        // Log.i(TAG, "id: " + id + ", vertical:" + vertical + ", horizontal:" + horizontal);
-        // 没找到设备
-        if (devices[id] == 0) {
-            Log.i(TAG, "没找到 " + id + " 设备");
+        // 没找到默认 USB 设备
+        if (devices[0] == 0) {
+            Log.i(TAG, "没找到 USB 设备");
             return;
         }
 
-        // 这里发送数据
-
         // 主机模式发送数据
         byte write_pid = 0x11;
-        byte[] write_data = {0x01, 0x00, 0x00, (byte) 0xd0, 0x00, 0x00, 0x00, 0x00};
-        int ret = USB2LINEX.INSTANCE.LIN_EX_MasterWrite(devices[id], (byte) 0, write_pid, write_data, (byte) write_data.length, USB2LINEX.LIN_EX_CHECK_EXT);
 
-        if (ret == USB2LINEX.LIN_EX_SUCCESS) {
+        // 水平电机信号
+        byte horizontal_id = (byte) (id + 1) * 16;
+        byte horizontal_high = (byte) ((horizontal >> 8) & 0xff);
+        byte horizontal_low = (byte) (horizontal & 0xff);
+        byte[] horizontal_data = {horizontal_id, 0x00, 0x00, horizontal_high, horizontal_low, 0x00, 0x00, 0x00};
+
+        // 垂直电机信号
+        byte vertical_id = (byte) (id + 1) * 16 + 1;
+        byte vertical_high = (byte) ((vertical >> 8) & 0xff);
+        byte vertical_low = (byte) (vertical & 0xff);
+        byte[] vertical_data = {vertical_id, 0x00, 0x00, vertical_high, vertical_low, 0x00, 0x00, 0x00};
+
+        // 通过默认 USB 设备写入 lin 信号
+        int horizontal_ret = USB2LINEX.INSTANCE.LIN_EX_MasterWrite(devices[0], (byte) 0, write_pid, horizontal_data, (byte) horizontal_data.length, USB2LINEX.LIN_EX_CHECK_EXT);
+        int vertical_ret = USB2LINEX.INSTANCE.LIN_EX_MasterWrite(devices[0], (byte) 0, write_pid, vertical_data, (byte) vertical_data.length, USB2LINEX.LIN_EX_CHECK_EXT);
+
+        if (horizontal_ret == USB2LINEX.LIN_EX_SUCCESS && vertical_ret == USB2LINEX.LIN_EX_SUCCESS) {
             Log.i(TAG, "【" + id + "】信号发送成功");
+            // 成功回调
+            callback.success("【" + id + "】信号发送成功");
         } else {
             Log.i(TAG, "【" + id + "】信号发送失败");
+            // 失败回调
+            callback.error("【" + id + "】信号发送失败");
         }
-
-        // 成功回调
-        callback.success(id);
-        // 失败回调
-        // callback.error("message");
     }
 
     private void close() {
