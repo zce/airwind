@@ -98,13 +98,13 @@ public class Native extends CordovaPlugin {
         byte write_pid = 0x11;
 
         // 水平电机信号
-        byte horizontal_id = (byte) (id + 1) * 16;
+        byte horizontal_id = (byte) ((id + 1) * 16);
         byte horizontal_high = (byte) ((horizontal >> 8) & 0xff);
         byte horizontal_low = (byte) (horizontal & 0xff);
         byte[] horizontal_data = {horizontal_id, 0x00, 0x00, horizontal_high, horizontal_low, 0x00, 0x00, 0x00};
 
         // 垂直电机信号
-        byte vertical_id = (byte) (id + 1) * 16 + 1;
+        byte vertical_id = (byte) ((id + 1) * 16 + 1);
         byte vertical_high = (byte) ((vertical >> 8) & 0xff);
         byte vertical_low = (byte) (vertical & 0xff);
         byte[] vertical_data = {vertical_id, 0x00, 0x00, vertical_high, vertical_low, 0x00, 0x00, 0x00};
