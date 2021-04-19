@@ -29,7 +29,7 @@ const style = computed(() => ({
   transform: `perspective(500px) rotateX(${87 + props.vertical}deg) skewX(${props.horizontal}deg)`,
   transition: props.transition ? 'transform 500ms' : '',
 
-  '--size': props.volume && 0.5 + 0.06 * props.volume,
+  '--size': props.volume && 0.5 + 0.008 * props.volume,
   '--color': colors[props.temperature]
 }))
 </script>
@@ -45,10 +45,10 @@ const style = computed(() => ({
   transition: transform 800ms;
 }
 .layer:nth-child(1) {
-  transform: perspective(1000px) rotateX(1deg) translateZ(-1px) scale(0.8, var(--size, 1));
+  transform: perspective(1000px) rotateX(1deg) translateZ(-1px) scale(1, var(--size, 1));
 }
 .layer:nth-child(2) {
-  transform: perspective(1000px) rotateX(-1deg) translateZ(-5px) scale(0.8, var(--size, 1));
+  transform: perspective(1000px) rotateX(-1deg) translateZ(-5px) scale(1, var(--size, 1));
 }
 .layer i {
   position: absolute;

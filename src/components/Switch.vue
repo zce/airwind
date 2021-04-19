@@ -33,20 +33,18 @@ props.align === 'right' && actions.reverse()
 
 <style>
 button {
-  margin: 0.5rem;
+  margin: 0.8rem;
   padding: 0.75rem 1.75rem;
-  border: 0.125rem solid var(--primary-color);
-  border-radius: 2rem;
+  border: 0;
+  border-radius: 0.25rem;
   background: var(--primary-color-alpha);
   color: var(--primary-color);
-  font-size: 1.25rem;
   font-weight: 500;
-  box-shadow: 0 0 0.5rem var(--primary-color-alpha);
   outline: 0;
   transition: background 300ms, color 300ms;
 }
 button.active {
   background: var(--primary-color);
-  color: #fff;
+  color: #000;
 }
 </style>

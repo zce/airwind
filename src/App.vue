@@ -1,16 +1,16 @@
 <template>
-  <Slider class="top" v-model="state.volume" />
   <Picker class="left" v-model="state.temperature.left" />
   <Picker class="right" v-model="state.temperature.right" />
+  <Slider class="middle" v-model="state.volume" />
   <div class="bottom">
     <Switch align="left" v-model="state.preset.left" />
     <Switch align="right" v-model="state.preset.right" />
   </div>
   <!-- x、y: 风口在屏幕上的位置 -->
-  <Outlet :id="0" :x="250" :y="416" :mode="state.outlets[0].mode" :vertical="parse(state.outlets[0].vertical)" :horizontal="parse(state.outlets[0].horizontal)" :volume="state.volume" :temperature="state.temperature.left" :transition="state.outlets[0].transition"/>
-  <Outlet :id="1" :x="490" :y="416" :mode="state.outlets[1].mode" :vertical="parse(state.outlets[1].vertical)" :horizontal="parse(state.outlets[1].horizontal)" :volume="state.volume" :temperature="state.temperature.left" :transition="state.outlets[1].transition"/>
-  <Outlet :id="2" :x="790" :y="416" :mode="state.outlets[2].mode" :vertical="parse(state.outlets[2].vertical)" :horizontal="parse(state.outlets[2].horizontal)" :volume="state.volume" :temperature="state.temperature.right" :transition="state.outlets[2].transition"/>
-  <Outlet :id="3" :x="1030" :y="416" :mode="state.outlets[3].mode" :vertical="parse(state.outlets[3].vertical)" :horizontal="parse(state.outlets[3].horizontal)" :volume="state.volume" :temperature="state.temperature.right" :transition="state.outlets[3].transition"/>
+  <Outlet :id="0" :x="245" :y="263" :mode="state.outlets[0].mode" :vertical="parse(state.outlets[0].vertical)" :horizontal="parse(state.outlets[0].horizontal)" :volume="state.volume" :temperature="state.temperature.left" :transition="state.outlets[0].transition"/>
+  <Outlet :id="1" :x="470" :y="257" :mode="state.outlets[1].mode" :vertical="parse(state.outlets[1].vertical)" :horizontal="parse(state.outlets[1].horizontal)" :volume="state.volume" :temperature="state.temperature.left" :transition="state.outlets[1].transition"/>
+  <Outlet :id="2" :x="820" :y="257" :mode="state.outlets[2].mode" :vertical="parse(state.outlets[2].vertical)" :horizontal="parse(state.outlets[2].horizontal)" :volume="state.volume" :temperature="state.temperature.right" :transition="state.outlets[2].transition"/>
+  <Outlet :id="3" :x="1046" :y="264" :mode="state.outlets[3].mode" :vertical="parse(state.outlets[3].vertical)" :horizontal="parse(state.outlets[3].horizontal)" :volume="state.volume" :temperature="state.temperature.right" :transition="state.outlets[3].transition"/>
 </template>
 
 <script setup>
@@ -32,7 +32,7 @@ const useState = () => {
   // 状态是程序运行过程中使用的数据，会在值发生改变的时候自动保存，下次可取
   // 状态里面的值最终绑定到界面元素上，界面元素操作会自动修改状态里的值
   const state = reactive({
-    volume: 4, // 风量（0 - 10）
+    volume: 60, // 风量（0 - 100）
     temperature: {
       left: 24.5, // 左侧温度
       right: 26.5 // 右侧温度
@@ -198,8 +198,8 @@ html {
   height: 100%;
 }
 body {
-  --primary-color: #5dabee;
-  --primary-color-alpha: #5dabee50;
+  --primary-color: #fff;
+  --primary-color-alpha: #666;
 
   position: relative;
   display: flex;
@@ -221,20 +221,13 @@ body {
   position: relative;
   width: 1280px;
   height: 800px;
-  background: center/contain no-repeat url(assets/background.png);
+  background: center/contain no-repeat url(assets/tesla.png);
   font-family: DSDIGI, system-ui;
 }
 #app::after {
   content: '';
   display: block;
   padding-bottom: 62.5%;
-}
-.top {
-  position: absolute;
-  top: 5rem;
-  left: 20rem;
-  right: 20rem;
-  z-index: 1;
 }
 .left {
   z-index: 1;
@@ -251,6 +244,13 @@ body {
   bottom: 10rem;
   right: 0;
   width: 10rem;
+}
+.middle {
+  position: absolute;
+  bottom: 12rem;
+  left: 24rem;
+  right: 24rem;
+  z-index: 1;
 }
 .bottom {
   position: absolute;

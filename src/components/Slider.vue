@@ -1,6 +1,6 @@
 <template>
   <div class="slider">
-    <svg class="icon" fill="currentColor" viewBox="0 0 512 512" width="14">
+    <svg class="icon" fill="currentColor" viewBox="0 0 512 512" width="12">
       <path d="M511.949,382.379c-0.611-18.329-6.417-35.725-16.79-50.307c-11.196-15.737-27.25-27.32-46.426-33.495l-51.345-16.535
         c-5.256-1.692-10.891,1.196-12.584,6.453c-1.693,5.257,1.196,10.891,6.453,12.584l51.345,16.535
         c35.162,11.323,48.551,41.224,49.357,65.431c0.807,24.208-10.563,54.933-44.894,68.571l-94.547,37.56
@@ -37,11 +37,7 @@
         c0,2.64,1.06,5.22,2.93,7.08c1.86,1.86,4.43,2.92,7.07,2.92c2.63,0,5.21-1.06,7.07-2.92c1.86-1.87,2.93-4.44,2.93-7.08
         C181.571,235.161,180.501,232.591,178.641,230.721z"/>
     </svg>
-    <Slider :modelValue="modelValue" @update:modelValue="$emit('update:modelValue', $event)" :max="10">
-      <template #button>
-        <div class="van-slider__button">{{ modelValue }}</div>
-      </template>
-    </Slider>
+    <Slider :modelValue="modelValue" @update:modelValue="$emit('update:modelValue', $event)" />
     <svg class="icon" fill="currentColor" viewBox="0 0 512 512" width="22">
       <path d="M511.949,382.379c-0.611-18.329-6.417-35.725-16.79-50.307c-11.196-15.737-27.25-27.32-46.426-33.495l-51.345-16.535
         c-5.256-1.692-10.891,1.196-12.584,6.453c-1.693,5.257,1.196,10.891,6.453,12.584l51.345,16.535
@@ -101,16 +97,13 @@ defineEmit(['update:modelValue'])
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
-  border-radius: 2rem;
-  background: rgba(0, 0, 0, 0.5);
 }
 .van-slider {
   position: relative;
   flex: 1 1 0;
   margin: 0 0.5rem;
   height: 0.5rem;
-  background: #fff;
+  background: #777;
   border-radius: 2rem;
   cursor: pointer;
 }
@@ -132,13 +125,9 @@ defineEmit(['update:modelValue'])
   transition: all 0.2s;
 }
 .van-slider__button {
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 1.25rem;
+  height: 1.25rem;
   background: var(--primary-color);
-  line-height: 3;
-  text-align: center;
-  color: var(--primary-color);
-  font-size: 2rem;
   border-radius: 50%;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 0 0.5rem var(--primary-color-alpha);
 }
@@ -158,7 +147,7 @@ defineEmit(['update:modelValue'])
   cursor: grab;
 }
 .icon {
-  margin: 0 0.75rem;
+  margin: 0 0.5rem;
   color: var(--primary-color);
 }
 </style>

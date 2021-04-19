@@ -3,7 +3,7 @@
     :columns="columns"
     :defaultIndex="temps.indexOf(modelValue)"
     :visibleItemCount="7"
-    :itemHeight="80"
+    :itemHeight="75"
     :showToolbar="false"
     @change="i => $emit('update:modelValue', i.value)"
   />
@@ -39,32 +39,16 @@ defineEmit(['update:modelValue'])
   right: 1rem;
   left: 1rem;
   z-index: 2;
-  border: 0.25rem solid var(--primary-color);
-  border-radius: 1rem;
-  box-shadow: 0 0 0.5rem var(--primary-color-alpha);
+  border: 0.125rem solid var(--primary-color);
+  border-radius: 0.4rem;
   transform: translateY(-50%);
-  pointer-events: none;
-}
-.van-picker__mask {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)),
-    linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
-  background-repeat: no-repeat;
-  background-position: top, bottom;
-  transform: translateZ(0);
   pointer-events: none;
 }
 .van-picker-column {
   flex: 1;
   overflow: hidden;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   color: var(--primary-color);
-  text-shadow: 0 0 0.25rem var(--primary-color-alpha);
 }
 .van-picker-column__wrapper {
   margin: 0;
@@ -80,6 +64,6 @@ defineEmit(['update:modelValue'])
   transition: font-size 200ms;
 }
 .van-picker-column__item--selected {
-  font-size: 3rem;
+  font-size: 2.25rem;
 }
 </style>
