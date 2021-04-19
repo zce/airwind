@@ -16,7 +16,6 @@ const build = api => {
 
   build.fn = (...args) => {
     return originalBuild(...args)
-      .then(() => cordova.clean())
       .then(() => cordova.prepare())
       .then(() => cordova.compile({ options: args[0] }))
       .catch(console.error)
