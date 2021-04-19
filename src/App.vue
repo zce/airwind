@@ -82,13 +82,13 @@ const update = e => {
   // 获取触摸位置的横纵坐标
   const { clientX, clientY } = e.touches[0]
   // 拿到触摸的风口对应的 id 和相应的界面元素
-  const { id, parentElement } = e.target.parentElement.parentElement
+  const { id, parentElement, style } = e.target.parentElement.parentElement
   // 获取该风口对应的界面元素在屏幕上的位置
   const { offsetLeft, offsetTop } = parentElement
 
   // 根据风口位置和触摸点位置，计算以风口为坐标原点的横纵坐标值
-  const x = clientX - offsetLeft
-  const y = clientY - offsetTop
+  const x = clientX - offsetLeft - parseInt(style.left)
+  const y = clientY - offsetTop - parseInt(style.top)
 
   // 获取数据状态中对应风口的数据值
   const current = state.outlets[id]
@@ -101,8 +101,8 @@ const update = e => {
   }
 
   // 三角函数，根据 x y 位置计算角度
-  const va = revert(-180 / (Math.PI / Math.atan((y - current.y) / 500)))
-  const ha = revert(180 / (Math.PI / Math.atan((x - current.x) / 500)))
+  const va = revert(-180 / (Math.PI / Math.atan(y / 500)))
+  const ha = revert(180 / (Math.PI / Math.atan(x / 500)))
 
   // 控制拖拽角度变化的最大值与最小值
   if (va > 0 && va < 650) current.vertical = va
