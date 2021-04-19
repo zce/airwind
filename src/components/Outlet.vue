@@ -26,7 +26,7 @@ const props = defineProps({
 const style = computed(() => ({
   top: `${props.y}px`,
   left: `${props.x}px`,
-  transform: `perspective(500px) rotateX(${87 + props.vertical}deg) skewX(${props.horizontal}deg)`,
+  transform: `perspective(500px) rotateX(${88 + props.vertical}deg) skewX(${props.horizontal}deg)`,
   transition: props.transition ? 'transform 500ms' : '',
 
   '--size': props.volume && 0.5 + 0.008 * props.volume,
