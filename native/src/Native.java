@@ -90,8 +90,10 @@ public class Native extends CordovaPlugin {
     private void update(int id, int vertical, int horizontal, CallbackContext callback) {
         // 没找到默认 USB 设备
         if (devices[0] == 0) {
-            Log.i(TAG, "没找到 USB 设备");
-            return;
+            // 尝试初始化 USB
+            init();
+            // 如果还没找到就结束
+            if (devices[0] == 0) return;
         }
 
         // 主机模式发送数据
@@ -144,8 +146,18 @@ public class Native extends CordovaPlugin {
         WebSettings settings = view.getSettings();
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
+    }
+
+    @Override
+    public void onResume(boolean multitasking) {
         // init usb device
         init();
+    }
+
+    @Override
+    public void onDestroy() {
+        // close all devices
+        close();
     }
 
     @Override
@@ -156,11 +168,5 @@ public class Native extends CordovaPlugin {
         int horizontal = args.getInt(2);
         update(id, vertical, horizontal, callback);
         return true;
-    }
-
-    @Override
-    public void onDestroy() {
-        // close all devices
-        close();
     }
 }
