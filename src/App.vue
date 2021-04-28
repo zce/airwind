@@ -112,44 +112,24 @@ const update = e => {
 // 绑定拖拽事件
 onMounted(() => document.addEventListener('touchmove', update, false))
 onUnmounted(() => document.removeEventListener('touchmove', update))
-
-// 风口角度变化后自动执行，id 为发生变化的风口 id
-const outletUpdate = id => throttle(outlet => {
-  const va = Math.round(outlet.vertical / 1000 * 1600) // 垂直方向 1600 步
-  const ha = Math.round(outlet.horizontal / 1000 * 480) // 水平方向 480 步
-  // Native 是运行环境暴露的一个 JSBridge，只有在 Android 环境中才有
-  if (typeof Native !== 'undefined') {
-    // 调用原生 API 发送信号
-    Native.update(id, va, ha, console.log, console.error)
-  } else {
-    // 打印数据到控制台
-    console.log(id, va, ha)
-  }
-}, 500) // 最小执行间隔 500ms
-
-// 分别监视每一个风口数据变化
-state.outlets.forEach((_, id) => watch(() => state.outlets[id], outletUpdate(id), { deep: true }))
 // #endregion
 
 // #region 预设模式变化逻辑
 // 高阶函数，左右预设模式发生修改后执行
 const persetChange = (align, o1, o2) => preset => {
   // 启动风口位置变化时的过渡动画（手动和扫风不需要动画）
-  state.outlets[o1].transition = true
-  state.outlets[o2].transition = true
+  state.outlets[o1].transition = state.outlets[o2].transition = ['focus', 'avoid'].includes(preset)
 
   // 聚焦模式
   if (preset === 'focus') {
     state.outlets[o1].horizontal = 950 // 单侧第一个风口 950 步
     state.outlets[o2].horizontal = 50 // 单侧第二个风口 50 步
-    return
   }
 
   // 避脸模式
   if (preset === 'avoid') {
     state.outlets[o1].horizontal = 50 // 单侧第一个风口 50 步
     state.outlets[o2].horizontal = 950 // 单侧第二个风口 950 步
-    return
   }
 
   // 扫风
@@ -159,6 +139,7 @@ const persetChange = (align, o1, o2) => preset => {
 
     let angle1 = state.outlets[o1].horizontal // 当前单侧第一个风口横向角度
     let angle2 = state.outlets[o2].horizontal // 当前单侧第二个风口横向角度
+
     const sweep = () => {
       // 如果此侧预设模式不再是扫风，则停止角度变化
       if (state.preset[align] !== 'sweep') return
@@ -180,15 +161,30 @@ const persetChange = (align, o1, o2) => preset => {
     // 动画第一帧
     requestAnimationFrame(sweep)
   }
-
-  // 关闭风口过渡动画
-  state.outlets[o1].transition = false
-  state.outlets[o2].transition = false
 }
 
 // 分别监视左右侧预设模式，左侧修改 0 1 风口，右侧修改 2 3 风口
 watch(() => state.preset.left, persetChange('left', 0, 1))
 watch(() => state.preset.right, persetChange('right', 2, 3))
+// #endregion
+
+// #region 发送风口角度信号
+// 风口角度变化后自动执行，id 为发生变化的风口 id
+const outletUpdate = id => throttle(outlet => {
+  const va = Math.round(outlet.vertical / 1000 * 1600) // 垂直方向 1600 步
+  const ha = Math.round(outlet.horizontal / 1000 * 480) // 水平方向 480 步
+  // Native 是运行环境暴露的一个 JSBridge，只有在 Android 环境中才有
+  if (typeof Native !== 'undefined') {
+    // 调用原生 API 发送信号
+    Native.update(id, va, ha, console.log, console.error)
+  } else {
+    // 打印数据到控制台
+    console.log(id, va, ha)
+  }
+}, 500) // 最小执行间隔 500ms
+
+// 分别监视每一个风口数据变化
+state.outlets.forEach((_, id) => watch(() => state.outlets[id], outletUpdate(id), { deep: true }))
 // #endregion
 </script>
 
