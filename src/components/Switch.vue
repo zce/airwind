@@ -7,8 +7,6 @@
 </template>
 
 <script setup>
-import { defineEmit, defineProps } from 'vue'
-
 const props = defineProps({
   modelValue: {
     type: String,
@@ -19,7 +17,7 @@ const props = defineProps({
   }
 })
 
-defineEmit(['update:modelValue'])
+defineEmits(['update:modelValue'])
 
 const actions = [
   { value: 'focus', text: '聚焦' },

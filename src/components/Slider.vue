@@ -79,7 +79,6 @@
 </template>
 
 <script setup>
-import { defineEmit, defineProps } from 'vue'
 import Slider from 'vant/es/slider'
 
 defineProps({
@@ -89,7 +88,7 @@ defineProps({
   }
 })
 
-defineEmit(['update:modelValue'])
+defineEmits(['update:modelValue'])
 </script>
 
 <style>

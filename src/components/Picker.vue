@@ -10,7 +10,6 @@
 </template>
 
 <script setup>
-import { defineEmit, defineProps } from 'vue'
 import Picker from 'vant/es/picker'
 import { temps, columns } from '../utils/temperatures'
 
@@ -21,7 +20,7 @@ defineProps({
   }
 })
 
-defineEmit(['update:modelValue'])
+defineEmits(['update:modelValue'])
 </script>
 
 <style>

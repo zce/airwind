@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { computed, defineProps } from 'vue'
+import { computed } from 'vue'
 import { colors } from '../utils/temperatures'
 
 const props = defineProps({
